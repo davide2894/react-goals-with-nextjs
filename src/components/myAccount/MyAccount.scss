@@ -1,0 +1,23 @@
+@use "../../scss/core" as *;
+@use "../../scss/common/forms.scss" as *;
+
+.myAccount {
+  margin-top: $space25;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: $space55 auto;
+
+  @media screen and (min-width: 1024px) {
+    flex-direction: row;
+  }
+
+  &__form {
+    min-width: 250px;
+  }
+
+  &__separatorH2 {
+    text-align: center;
+    margin: $space55;
+  }
+}

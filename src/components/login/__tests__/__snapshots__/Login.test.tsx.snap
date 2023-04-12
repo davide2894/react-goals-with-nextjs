@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login component matches its own snapshot 1`] = `
+<div
+  className="hi myAccount__form myAccount__form--login formWrapper"
+  data-testid="loginComponentTest"
+>
+  <h2>
+    Login if you have already an account
+  </h2>
+  <br />
+  <form
+    onSubmit={[Function]}
+  >
+    <div
+      className="form-control"
+    >
+      <label
+        htmlFor="loginFormEmailInput"
+      >
+        Email
+      </label>
+      <input
+        id="loginFormEmailInput"
+        name="email"
+        onChange={[Function]}
+        type="email"
+        value=""
+      />
+      <span
+        className="separator"
+      >
+         
+      </span>
+    </div>
+    <div
+      className="form-control"
+    >
+      <label
+        htmlFor="loginFormPassword"
+      >
+        Password
+      </label>
+      <input
+        id="loginFormPassword"
+        name="password"
+        onChange={[Function]}
+        type="password"
+        value=""
+      />
+      <span
+        className="separator"
+      >
+         
+      </span>
+    </div>
+    <div
+      className="form-control"
+    >
+      <button
+        type="submit"
+      >
+        Login
+      </button>
+    </div>
+  </form>
+</div>
+`;
