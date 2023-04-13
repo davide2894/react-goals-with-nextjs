@@ -30,6 +30,7 @@ function Login() {
           <input
             type="email"
             name="email"
+            required
             id="loginFormEmailInput"
             value={email}
             onChange={(evt) => handleEmailChange(evt)}
@@ -41,6 +42,7 @@ function Login() {
           <input
             type="password"
             name="password"
+            required
             id="loginFormPassword"
             value={password}
             onChange={(evt) => handlePasswordChange(evt)}
