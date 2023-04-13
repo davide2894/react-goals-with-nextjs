@@ -34,10 +34,11 @@ function Goal({ goal, currentUser }) {
         <div className="score__ctas">
           <button
             title="decrease score by 1"
-            className="score__button score__button--decrease"
+            className="score__button score__button--decrease mr-4"
             onClick={() => dispatch(decrementScore(goal))}
             disabled={goal.score.actual === goal.score.min || isComplete}>
             <span className="icon score__buttonIcon score__buttonIcon--decreaseScore"></span>
+            -1
           </button>
           <button
             title="increase score by 1"
@@ -45,21 +46,24 @@ function Goal({ goal, currentUser }) {
             onClick={() => dispatch(incrementScore(goal))}
             disabled={goal.score.actual === goal.score.max || isComplete}>
             <span className="icon score__buttonIcon score__buttonIcon--increaseScore"></span>
+            +1
           </button>
         </div>
         <div className="score__otherActionsWrapper">
           <button
             title="edit goal"
-            className="score__button score__button--edit"
+            className="score__button score__button--edit mr-4"
             disabled={isComplete}
             onClick={onEditFormOpenHandler}>
             <span className="icon score__buttonIcon score__buttonIcon--edit"></span>
+            Edit
           </button>
           <button
             title="delete goal"
-            className="score__button score__button--delete"
+            className="score__button score__button--delete mr-4"
             onClick={() => dispatch(deleteGoal(goal))}>
             <span className="icon score__buttonIcon score__buttonIcon--delete"></span>
+            Delete
           </button>
           <button
             title="reset goal score"
@@ -67,6 +71,7 @@ function Goal({ goal, currentUser }) {
             disabled={goal.score.actual === 0}
             onClick={() => dispatch(resetGoal(goal))}>
             <span className="icon score__buttonIcon score__buttonIcon--reset"></span>
+            Resete
           </button>
           {showEditGoalForm && (
             <Modal mode="edit" onClose={() => setShowEditGoalForm(false)}>

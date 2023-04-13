@@ -1,5 +1,5 @@
 import React from "react";
-import "./MyAccount.scss";
+// @TODO tailwind -> import "./MyAccount.scss";
 import Register from "@components/register/Register";
 import Login from "@components/login/Login";
 

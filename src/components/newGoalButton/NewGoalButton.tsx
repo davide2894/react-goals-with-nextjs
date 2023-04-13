@@ -1,4 +1,4 @@
-import "./NewGoalButton.scss";
+//@TODO: tailwing -> import "./NewGoalButton.scss";
 import { useState } from "react";
 import GoalForm from "../goalForm/GoalForm";
 import Modal from "../modal/Modal";

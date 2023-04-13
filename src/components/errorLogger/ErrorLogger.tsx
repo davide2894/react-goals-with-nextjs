@@ -1,4 +1,4 @@
-import "./ErrorLogger.scss";
+//  @TODO tailwind -> import "./ErrorLogger.scss";
 
 function ErrorLogger({ errorMessage }) {
   return (

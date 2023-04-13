@@ -84,10 +84,11 @@ function Goals() {
   return (
     <div className="goals">
       <button
-        className="cta cta__signOut"
+        className="cta cta__signOut w-4 h-4 block bg-white"
         onClick={handleSignOut}
         title="sing out">
         <span className="cta__signOutIcon"></span>
+        Singout
       </button>
       <h1 className="goals__h1">Goals</h1>
       <NewGoalButton />
