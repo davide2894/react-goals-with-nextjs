@@ -3,9 +3,9 @@ import React from "react";
 function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
-      <nav>
-        <p>This is an example header!</p>
-      </nav>
+      <div className="home__welcomeMessage">
+        <h1>WELCOME TO DAILY GOAL TRACKER</h1>
+      </div>
 
       <div>
         <main>{children}</main>
