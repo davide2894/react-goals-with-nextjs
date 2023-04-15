@@ -1,4 +1,3 @@
-// ./initAuth.js
 import { init } from "next-firebase-auth";
 import { firebase } from "../firebase";
 
