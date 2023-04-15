@@ -27,13 +27,13 @@ export const firestoreApi = createApi({
   tagTypes: ["Goals"],
   endpoints: (builder) => ({
     fetchGoals: builder.query({
-      async queryFn(user) {
+      async queryFn(userDocId) {
         try {
           console.log("goals api - fetching goals from DB");
           let goalsFromDB: Array<Goal> = [];
           const goalsCollectionRef = collection(
             db,
-            `/users/${user.userDocId}/user-goals/`
+            `/users/${userDocId}/user-goals/`
           );
           const querySnapshot = await getDocs(
             query(goalsCollectionRef, orderBy("title", "asc"))

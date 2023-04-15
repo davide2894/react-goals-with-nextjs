@@ -17,6 +17,7 @@ import {
   withAuthUser,
   withAuthUserSSR,
 } from "next-firebase-auth";
+import getUserDocId from "@utils/getUserDocId";
 
 export function Goals() {
   console.log("Goals component rendered");
@@ -29,11 +30,7 @@ export function Goals() {
     isSuccess,
     isLoading,
     isError,
-  } = useFetchGoalsQuery({
-    email: user.email,
-    uid: user.id,
-    userDocId: `${user.email}-${user.id}`,
-  });
+  } = useFetchGoalsQuery(getUserDocId(user.email, user.id));
   const debouncedGoals = useDebounce(goals, 200, { trailing: true });
   useSyncFirestoreDb(debouncedGoals[0], `${user.email}-${user.id}`);
 
