@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { render } from "@testing-library/react";
 import goalFormReducer from "../redux/slices/goalFormSlice";
-import userReducer from "../redux/slices/_delete_userSlice";
 import { firestoreApi } from "../redux/slices/goalsApi";
 import { Provider } from "react-redux";
 
@@ -16,7 +15,6 @@ export function renderWithProviders(
     store = configureStore({
       reducer: {
         goalFormReducer: goalFormReducer,
-        userReducer: userReducer,
         [firestoreApi.reducerPath]: firestoreApi.reducer,
       },
       preloadedState,

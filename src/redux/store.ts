@@ -1,14 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import goalReducer from "./slices/goalSlice";
 import goalFormReducer from "./slices/goalFormSlice";
-import userReducer from "./slices/_delete_userSlice";
 import { firestoreApi } from "./slices/goalsApi";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 export const store = configureStore({
   reducer: {
     goalFormReducer: goalFormReducer,
-    userReducer: userReducer,
     [firestoreApi.reducerPath]: firestoreApi.reducer,
     goalReducer: goalReducer,
   },
