@@ -1,5 +1,7 @@
 import React, { SyntheticEvent, useState } from "react";
 import { registerWithEmailAndPassword } from "../../firebase";
+import Loader from "@components/loader/Loader";
+import { withAuthUser, AuthAction } from "next-firebase-auth";
 
 function Register() {
   const [name, setName] = useState("");
@@ -65,4 +67,9 @@ function Register() {
   );
 }
 
-export default Register;
+export default withAuthUser({
+  whenAuthed: AuthAction.REDIRECT_TO_APP,
+  whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
+  whenUnauthedAfterInit: AuthAction.RENDER,
+  LoaderComponent: Loader,
+})(Register);

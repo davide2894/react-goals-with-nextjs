@@ -1,5 +1,7 @@
 import { useState, SyntheticEvent, ChangeEvent } from "react";
 import { loginWithEmailAndPassword } from "../../firebase";
+import { AuthAction, withAuthUser, withAuthUserSSR } from "next-firebase-auth";
+import Loader from "@components/loader/Loader";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -57,4 +59,9 @@ function Login() {
   );
 }
 
-export default Login;
+export default withAuthUser({
+  whenAuthed: AuthAction.REDIRECT_TO_APP,
+  whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
+  whenUnauthedAfterInit: AuthAction.RENDER,
+  LoaderComponent: Loader,
+})(Login);
