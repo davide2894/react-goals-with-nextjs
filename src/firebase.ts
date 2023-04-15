@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import getUserDocId from "@utils/getUserDocId";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -40,7 +41,8 @@ const registerWithEmailAndPassword = async (name, email, password) => {
       password
     );
     const user = registrationResult.user;
-    await setDoc(doc(db, "users", `${user.email}-${user.uid}`), {
+    const userDocId = getUserDocId(user.email, user.uid);
+    await setDoc(doc(db, "users", userDocId), {
       name,
       email,
       uid: user.uid,
@@ -59,7 +61,7 @@ const loginWithEmailAndPassword = async (email, password) => {
     const res = await signInWithEmailAndPassword(auth, email, password);
     const user = res.user;
     if (user) {
-      console.log("user logged successfully");
+      console.log({ msg: "user logged successfully", user });
     }
   } catch (err) {
     alert("There is an issue with your credentials. Please try again");
