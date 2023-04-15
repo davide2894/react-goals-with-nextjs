@@ -10,7 +10,7 @@ import {
   incrementScore,
 } from "../../redux/slices/goalSlice";
 
-function Goal({ goal, currentUser }) {
+function Goal({ goal }: any) {
   const [showEditGoalForm, setShowEditGoalForm] = useState(false);
   const isComplete = goal.score.actual === goal.score.max;
   const goalWrapperClasses = `goal ${
