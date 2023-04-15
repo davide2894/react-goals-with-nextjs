@@ -1,4 +1,5 @@
 import Goal from "@components/goal/Goal";
+import { GoalType } from "../types";
 //TODO tailwind -> import "./Goals.scss";
 import NewGoalButton from "@components/newGoalButton/NewGoalButton";
 import { useAppSelector } from "@redux/store";
@@ -6,7 +7,6 @@ import ErrorLogger from "@components/errorLogger/ErrorLogger";
 import { ReactFragment, useEffect } from "react";
 import { useDebounce } from "use-debounce";
 import useSyncFirestoreDb from "@utils/useSyncFirestoreDB";
-import { useFetchGoalsQuery } from "@redux/slices/goalsApi";
 import { useDispatch } from "react-redux";
 import { syncWithBackend } from "@redux/slices/goalSlice";
 import Loader from "@components/loader/Loader";
@@ -15,24 +15,32 @@ import {
   AuthAction,
   useAuthUser,
   withAuthUser,
-  withAuthUserSSR,
+  withAuthUserTokenSSR,
 } from "next-firebase-auth";
 import getUserDocId from "@utils/getUserDocId";
+import { db } from "@firebase";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 
-export function Goals() {
-  console.log("Goals component rendered");
+export function Goals({ goalsFromDB }: any) {
+  console.log("Goals page rendered");
+  console.log(goalsFromDB);
   const user = useAuthUser();
-  console.log({ user });
   const goals = useAppSelector((state) => state.goalReducer.goals);
   const dispatch = useDispatch();
-  const {
-    data: goalsFromDB,
-    isSuccess,
-    isLoading,
-    isError,
-  } = useFetchGoalsQuery(getUserDocId(user.email, user.id));
   const debouncedGoals = useDebounce(goals, 200, { trailing: true });
-  useSyncFirestoreDb(debouncedGoals[0], `${user.email}-${user.id}`);
+  useSyncFirestoreDb(debouncedGoals[0], getUserDocId(user.email, user.id));
+
+  useEffect(() => {
+    console.log("Goals -> useEffect to sync backend to local state");
+
+    dispatch(syncWithBackend(goalsFromDB));
+
+    return () => {
+      console.log(
+        "cleaning up Goals -> useEffect to sync backend to local state"
+      );
+    };
+  }, [dispatch, goalsFromDB]);
 
   let content:
     | string
@@ -44,31 +52,12 @@ export function Goals() {
     | null
     | undefined;
 
-  useEffect(() => {
-    console.log("Goals -> useEffect to sync backend to local state");
-    dispatch(syncWithBackend(goalsFromDB));
-    return () => {
-      console.log(
-        "cleaning up Goals -> useEffect to sync backend to local state"
-      );
-    };
-  }, [dispatch, goalsFromDB]);
-
-  if (isSuccess && goalsFromDB && goalsFromDB.length && goals && goals.length) {
+  if (goalsFromDB && goalsFromDB.length && goals && goals.length) {
     content = goals.map((goal) => {
       return <Goal key={goal.id} goal={goal} />;
     });
-  } else if (isLoading) {
-    content = <Loader />;
-  } else if (isError) {
-    content = (
-      <ErrorLogger
-        errorMessage={
-          "It seems there is an issue. Please try to reload the page"
-        }
-      />
-    );
   }
+
   return (
     <div className="goals">
       <SignOutButton />
@@ -85,6 +74,37 @@ export default withAuthUser({
   LoaderComponent: Loader,
 })(Goals);
 
-// export const getServerSideProps = withAuthUserSSR({
-//   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
-// })();
+export const getServerSideProps = withAuthUserTokenSSR({
+  whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+})(async ({ AuthUser }) => {
+  const mapGoal = (goalObjectFromFirestore: GoalType) => {
+    return {
+      title: goalObjectFromFirestore.title,
+      score: goalObjectFromFirestore.score,
+      id: goalObjectFromFirestore.id,
+    };
+  };
+  try {
+    console.log("goals api - fetching goals from DB");
+    let goalsFromDB: Array<GoalType> = [];
+    const goalsCollectionRef = collection(
+      db,
+      `/users/${getUserDocId(AuthUser.email, AuthUser.id)}/user-goals/`
+    );
+    const querySnapshot = await getDocs(
+      query(goalsCollectionRef, orderBy("title", "asc"))
+    );
+
+    querySnapshot.forEach((doc) => {
+      goalsFromDB.push(mapGoal(doc.data() as GoalType));
+    });
+
+    return {
+      props: {
+        goalsFromDB,
+      },
+    };
+  } catch (error) {
+    if (error instanceof Error) return { error: error.message };
+  }
+});

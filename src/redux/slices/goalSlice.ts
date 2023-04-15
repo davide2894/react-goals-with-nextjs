@@ -1,26 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Goal } from "../../types";
 
-let goals: Array<Goal> = [
-  {
-    title: "my first goal",
-    score: {
-      max: 5,
-      min: 0,
-      actual: 0,
-    },
-    id: "first",
-  },
-  {
-    title: "my second goal",
-    score: {
-      max: 3,
-      min: 0,
-      actual: 1,
-    },
-    id: "second",
-  },
-];
+let goals: Array<Goal> = [];
 
 let initialState = { goals };
 
