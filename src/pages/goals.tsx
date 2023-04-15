@@ -2,9 +2,6 @@ import Goal from "@components/goal/Goal";
 //TODO tailwind -> import "./Goals.scss";
 import NewGoalButton from "@components/newGoalButton/NewGoalButton";
 import { useAppSelector } from "@redux/store";
-import { auth } from "@firebase";
-import { signOut } from "firebase/auth";
-import { useRouter } from "next/router";
 import ErrorLogger from "@components/errorLogger/ErrorLogger";
 import { ReactFragment, useEffect } from "react";
 import { useDebounce } from "use-debounce";
@@ -13,15 +10,18 @@ import { useFetchGoalsQuery } from "@redux/slices/goalsApi";
 import { useDispatch } from "react-redux";
 import { syncWithBackend } from "@redux/slices/goalSlice";
 import Loader from "@components/loader/Loader";
-import ProtectedPage from "@components/protectedPage/ProtectedPage";
 import SignOutButton from "@components/signOutButton/SignOut";
-import useCheckUser from "@utils/useCheckUser";
-import { AuthAction, withAuthUser, withAuthUserSSR } from "next-firebase-auth";
+import {
+  AuthAction,
+  useAuthUser,
+  withAuthUser,
+  withAuthUserSSR,
+} from "next-firebase-auth";
 
 export function Goals() {
   console.log("Goals component rendered");
-  const currentUser = useAppSelector((state) => state.userReducer.user);
-  console.log(currentUser);
+  const user = useAuthUser();
+  console.log({ user });
   const goals = useAppSelector((state) => state.goalReducer.goals);
   const dispatch = useDispatch();
   const {
@@ -29,9 +29,13 @@ export function Goals() {
     isSuccess,
     isLoading,
     isError,
-  } = useFetchGoalsQuery(currentUser);
+  } = useFetchGoalsQuery({
+    email: user.email,
+    uid: user.id,
+    userDocId: `${user.email}-${user.id}`,
+  });
   const debouncedGoals = useDebounce(goals, 200, { trailing: true });
-  useSyncFirestoreDb(debouncedGoals[0], currentUser.userDocId);
+  useSyncFirestoreDb(debouncedGoals[0], `${user.email}-${user.id}`);
 
   let content:
     | string
@@ -55,7 +59,7 @@ export function Goals() {
 
   if (isSuccess && goalsFromDB && goalsFromDB.length && goals && goals.length) {
     content = goals.map((goal) => {
-      return <Goal key={goal.id} goal={goal} currentUser={currentUser} />;
+      return <Goal key={goal.id} goal={goal} />;
     });
   } else if (isLoading) {
     content = <Loader />;
