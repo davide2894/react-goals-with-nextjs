@@ -1,7 +1,5 @@
-import useCheckUser from "@utils/useCheckUser";
-import { Url } from "next/dist/shared/lib/router/router";
+import useCheckUser from "@utils/_delete_useCheckUser";
 import React, { useReducer, useState } from "react";
-import { useAppSelector } from "@redux/store";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 

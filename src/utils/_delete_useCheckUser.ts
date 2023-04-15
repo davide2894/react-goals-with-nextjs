@@ -1,5 +1,5 @@
 import { auth } from "@firebase";
-import { login } from "@redux/slices/userSlice";
+import { login } from "@redux/slices/_delete_userSlice";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
