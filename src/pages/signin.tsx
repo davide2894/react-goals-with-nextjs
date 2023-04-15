@@ -2,7 +2,6 @@ import React from "react";
 // @TODO tailwind -> import "./MyAccount.scss";
 import Register from "@components/register/Register";
 import Login from "@components/login/Login";
-import ProtectedPage from "@components/protectedPage/ProtectedPage";
 
 function Signin() {
   return (
