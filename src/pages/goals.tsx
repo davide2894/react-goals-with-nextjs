@@ -1,0 +1,89 @@
+import Goal from "@components/goal/Goal";
+//TODO tailwind -> import "./Goals.scss";
+import NewGoalButton from "@components/newGoalButton/NewGoalButton";
+import { useAppSelector } from "@redux/store";
+import { auth } from "@firebase";
+import { signOut } from "firebase/auth";
+import { useRouter } from "next/router";
+import ErrorLogger from "@components/errorLogger/ErrorLogger";
+import { ReactFragment, useEffect } from "react";
+import { useDebounce } from "use-debounce";
+import useSyncFirestoreDb from "@utils/useSyncFirestoreDB";
+import { useFetchGoalsQuery } from "@redux/slices/goalsApi";
+import { useDispatch } from "react-redux";
+import { syncWithBackend } from "@redux/slices/goalSlice";
+import Loader from "@components/loader/Loader";
+import ProtectedPage from "@components/protectedPage/ProtectedPage";
+import SignOutButton from "@components/signOutButton/SignOut";
+import useCheckUser from "@utils/useCheckUser";
+import { AuthAction, withAuthUser, withAuthUserSSR } from "next-firebase-auth";
+
+export function Goals() {
+  console.log("Goals component rendered");
+  const currentUser = useAppSelector((state) => state.userReducer.user);
+  console.log(currentUser);
+  const goals = useAppSelector((state) => state.goalReducer.goals);
+  const dispatch = useDispatch();
+  const {
+    data: goalsFromDB,
+    isSuccess,
+    isLoading,
+    isError,
+  } = useFetchGoalsQuery(currentUser);
+  const debouncedGoals = useDebounce(goals, 200, { trailing: true });
+  useSyncFirestoreDb(debouncedGoals[0], currentUser.userDocId);
+
+  let content:
+    | string
+    | number
+    | boolean
+    | ReactFragment
+    | JSX.Element
+    | JSX.Element[]
+    | null
+    | undefined;
+
+  useEffect(() => {
+    console.log("Goals -> useEffect to sync backend to local state");
+    dispatch(syncWithBackend(goalsFromDB));
+    return () => {
+      console.log(
+        "cleaning up Goals -> useEffect to sync backend to local state"
+      );
+    };
+  }, [dispatch, goalsFromDB]);
+
+  if (isSuccess && goalsFromDB && goalsFromDB.length && goals && goals.length) {
+    content = goals.map((goal) => {
+      return <Goal key={goal.id} goal={goal} currentUser={currentUser} />;
+    });
+  } else if (isLoading) {
+    content = <Loader />;
+  } else if (isError) {
+    content = (
+      <ErrorLogger
+        errorMessage={
+          "It seems there is an issue. Please try to reload the page"
+        }
+      />
+    );
+  }
+  return (
+    <div className="goals">
+      <SignOutButton />
+      <h1 className="goals__h1">Goals</h1>
+      <NewGoalButton />
+      {content}
+    </div>
+  );
+}
+
+export default withAuthUser({
+  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
+  whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
+  LoaderComponent: Loader,
+})(Goals);
+
+// export const getServerSideProps = withAuthUserSSR({
+//   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+// })();
