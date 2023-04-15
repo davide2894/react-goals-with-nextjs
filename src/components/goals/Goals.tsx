@@ -13,9 +13,11 @@ import { useFetchGoalsQuery } from "@redux/slices/goalsApi";
 import { useDispatch } from "react-redux";
 import { syncWithBackend } from "@redux/slices/goalSlice";
 import Loader from "@components/loader/Loader";
+import useCheckUser from "@utils/useCheckUser";
 
 function Goals() {
   console.log("Goals component rendered");
+  const checkUser = useCheckUser();
   const currentUser = useAppSelector((state) => state.userReducer.user);
   const goals = useAppSelector((state) => state.goalReducer.goals);
   const dispatch = useDispatch();
@@ -66,7 +68,14 @@ function Goals() {
     };
   }, [dispatch, goalsFromDB]);
 
-  if (isSuccess && goalsFromDB && goalsFromDB.length && goals && goals.length) {
+  if (
+    currentUser &&
+    isSuccess &&
+    goalsFromDB &&
+    goalsFromDB.length &&
+    goals &&
+    goals.length
+  ) {
     content = goals.map((goal) => {
       return <Goal key={goal.id} goal={goal} currentUser={currentUser} />;
     });
