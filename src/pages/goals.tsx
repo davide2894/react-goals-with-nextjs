@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 import { syncWithBackend } from "@redux/slices/goalSlice";
 import Loader from "@components/loader/Loader";
 import SignOutButton from "@components/signOutButton/SignOut";
+import SignedInInfo from "@components/signedInInfo/SignedInInfo";
+
 import {
   AuthAction,
   useAuthUser,
@@ -59,6 +61,7 @@ export function Goals({ goalsFromDB }: any) {
 
   return (
     <div className="goals">
+      {user.email && <SignedInInfo email={user.email} />}
       <SignOutButton />
       <h1 className="goals__h1">Goals</h1>
       <NewGoalButton />
