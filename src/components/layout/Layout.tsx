@@ -4,15 +4,15 @@ function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <div className="home__welcomeMessage">
-        <h1>WELCOME TO DAILY GOAL TRACKER</h1>
+        <h1 className="text-2xl font-bold mt-16 mb-16 text-center">
+          WELCOME TO DAILY GOAL TRACKER
+        </h1>
       </div>
 
-      <div>
-        <main>{children}</main>
-      </div>
+      <div>{children}</div>
 
-      <footer>
-        <p>This is an example footer!</p>
+      <footer className="absolute bottom-3 text-lg">
+        <p>Made with determination and ☕ by Davide Iaiunese</p>
       </footer>
     </div>
   );
