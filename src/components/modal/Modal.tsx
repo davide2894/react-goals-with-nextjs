@@ -27,22 +27,20 @@ function Modal(props) {
 
   return (
     <div
-      className="goalForm editGoalForm modal modalOverlay"
+      className="absolute top-0 bottom-0 left-0 right-0 bg-transparent backdrop-blur-md z-10"
       onClick={(evt) => closeModalOnClickOutside(evt)}>
       <button
-        className="editGoalForm__close modalOverlay__closeButton"
+        className="absolute top-0 right-0 w-[55px] h-[55px]"
         onClick={onCloseClick}>
-        <span className="modalOverlay__closeIcon"></span>
+        <span className="block w-[25px] h-[25px] bg-no-repeat bg-center bg-contain bg-[url('../../public/close-button.svg')]"></span>
       </button>
       <div
-        className="modalOverlay__main"
+        className="p-5 m-14  bg-gray-700 rounded"
         onClick={(evt) => {
           evt.stopPropagation();
         }}>
-        <div className="modalOverlay__content form">
-          <h2 className="modalOverlay__h2">
-            {mode === "add" ? "Add Goal" : "Edit Goal"}
-          </h2>
+        <div>
+          <h2>{mode === "add" ? "Add Goal" : "Edit Goal"}</h2>
           {props.children}
         </div>
       </div>
