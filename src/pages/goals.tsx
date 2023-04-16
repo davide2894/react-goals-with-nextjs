@@ -3,7 +3,6 @@ import { GoalType } from "../types";
 //TODO tailwind -> import "./Goals.scss";
 import NewGoalButton from "@components/newGoalButton/NewGoalButton";
 import { useAppSelector } from "@redux/store";
-import ErrorLogger from "@components/errorLogger/ErrorLogger";
 import { ReactFragment, useEffect } from "react";
 import { useDebounce } from "use-debounce";
 import useSyncFirestoreDb from "@utils/useSyncFirestoreDB";
@@ -84,9 +83,10 @@ export const getServerSideProps = withAuthUserTokenSSR({
       id: goalObjectFromFirestore.id,
     };
   };
+
+  let goalsFromDB: Array<GoalType> = [];
+
   try {
-    console.log("goals api - fetching goals from DB");
-    let goalsFromDB: Array<GoalType> = [];
     const goalsCollectionRef = collection(
       db,
       `/users/${getUserDocId(AuthUser.email, AuthUser.id)}/user-goals/`
@@ -98,13 +98,13 @@ export const getServerSideProps = withAuthUserTokenSSR({
     querySnapshot.forEach((doc) => {
       goalsFromDB.push(mapGoal(doc.data() as GoalType));
     });
-
-    return {
-      props: {
-        goalsFromDB,
-      },
-    };
   } catch (error) {
-    if (error instanceof Error) return { error: error.message };
+    if (error instanceof Error) console.log(error.message);
   }
+
+  return {
+    props: {
+      goalsFromDB,
+    },
+  };
 });
