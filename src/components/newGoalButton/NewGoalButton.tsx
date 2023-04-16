@@ -7,11 +7,11 @@ function NewGoalButton() {
   const [showNewGoalForm, setShowNewGoalForm] = useState(false);
 
   return (
-    <div className="newGoalButton newGoalButton__wrapper">
+    <div>
       <button
-        className="newGoalButton__button cta"
+        className="fixed flex justify-center right-5 bottom-5 w-16 h-16 align-middle rounded-full bg-yellow-500 hover:bg-yellow-700"
         onClick={() => setShowNewGoalForm(true)}>
-        +
+        <p className="text-black text-center text-5xl font-bold">+</p>
       </button>
       {showNewGoalForm && (
         <Modal mode="add" onClose={() => setShowNewGoalForm(false)}>
