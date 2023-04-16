@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { addGoal, updateGoal } from "../../redux/slices/goalSlice";
 import { v4 as uuidv4 } from "uuid";
 import { Goal, FormProps } from "../../types";
+import SubmitButton from "@components/submitButton/SubmitButton";
 //@TODO tailwind -> import "./GoalForm.scss";
 
 function GoalForm(props: FormProps) {
@@ -75,8 +76,7 @@ function GoalForm(props: FormProps) {
         </label>
       </div>
       <button type="submit" value="Submit">
-        Submit
-      </button>
+      <SubmitButton text="Submit" />
     </form>
   );
 }

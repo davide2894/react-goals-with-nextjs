@@ -2,6 +2,7 @@ import { useState, SyntheticEvent, ChangeEvent } from "react";
 import { loginWithEmailAndPassword } from "../../firebase";
 import { AuthAction, withAuthUser, withAuthUserSSR } from "next-firebase-auth";
 import Loader from "@components/loader/Loader";
+import SubmitButton from "@components/submitButton/SubmitButton";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -64,11 +65,7 @@ function Login() {
           <span className="separator"> </span>
         </div>
         <div>
-          <button
-            className="bg-yellow-500 hover:bg-yellow-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit">
-            Login
-          </button>
+          <SubmitButton text="Login" />
         </div>
       </form>
     </div>
