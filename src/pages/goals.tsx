@@ -61,8 +61,12 @@ export function Goals({ goalsFromDB }: any) {
 
   return (
     <div className="goals">
-      {user.email && <SignedInInfo email={user.email} />}
-      <SignOutButton />
+      {user.email && (
+        <div className="flex items-baseline justify-end">
+          <SignedInInfo email={user.email} />
+          <SignOutButton />
+        </div>
+      )}
       <h1 className="goals__h1">Goals</h1>
       <NewGoalButton />
       {content}
