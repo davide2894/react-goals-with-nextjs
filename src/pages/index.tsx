@@ -6,26 +6,28 @@ function Home() {
   const user = useAuthUser();
 
   let content;
+  let route;
+  let text;
 
   if (user.id) {
-    content = (
-      <div>
-        <Link href={"/goals"}>Go to Goals page</Link>
-      </div>
-    );
+    route = "/goals";
+    text = "Go to Goals page";
   } else {
-    content = (
-      <div>
-        <Link href={"/signin"}>Sign in</Link>
-      </div>
-    );
+    route = "/signin";
+    text = "Sign in";
   }
 
-  return (
-    <Layout>
-      <div className="home">{content}</div>
-    </Layout>
+  content = (
+    <div className="flex justify-center">
+      <Link
+        className="self-center bg-yellow-500 hover:bg-yellow-700 text-black font-bold py-2 px-4 rounded"
+        href={route}>
+        {text}
+      </Link>
+    </div>
   );
+
+  return <div className="home">{content}</div>;
 }
 
 export default withAuthUser({})(Home);
