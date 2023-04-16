@@ -16,7 +16,7 @@ function SignOutButton() {
 
   return (
     <button
-      className="cta cta__signOut w-4 h-4 block bg-white"
+      className="cta cta__signOut"
       onClick={handleSignOut}
       title="sing out">
       <span className="cta__signOutIcon"></span>
