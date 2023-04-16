@@ -11,7 +11,6 @@ import { syncWithBackend } from "@redux/slices/goalSlice";
 import Loader from "@components/loader/Loader";
 import SignOutButton from "@components/signOutButton/SignOut";
 import SignedInInfo from "@components/signedInInfo/SignedInInfo";
-
 import {
   AuthAction,
   useAuthUser,
@@ -43,15 +42,7 @@ export function Goals({ goalsFromDB }: any) {
     };
   }, [dispatch, goalsFromDB]);
 
-  let content:
-    | string
-    | number
-    | boolean
-    | ReactFragment
-    | JSX.Element
-    | JSX.Element[]
-    | null
-    | undefined;
+  let content;
 
   if (goalsFromDB && goalsFromDB.length && goals && goals.length) {
     content = goals.map((goal) => {
@@ -60,14 +51,14 @@ export function Goals({ goalsFromDB }: any) {
   }
 
   return (
-    <div className="goals">
+    <div>
       {user.email && (
-        <div className="flex items-baseline justify-end">
+        <div className="flex items-baseline justify-end mb-6">
           <SignedInInfo email={user.email} />
           <SignOutButton />
         </div>
       )}
-      <h1 className="goals__h1">Goals</h1>
+      <h1 className="text-2xl underline font-bold mb-6">Goals:</h1>
       <NewGoalButton />
       {content}
     </div>
