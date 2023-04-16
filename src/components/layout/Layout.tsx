@@ -11,7 +11,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
       <div>{children}</div>
 
-      <footer className="absolute bottom-3 text-lg">
+      <footer className="absolute text-lg mt-8">
         <p>Made with determination and ☕ by Davide Iaiunese</p>
       </footer>
     </div>
