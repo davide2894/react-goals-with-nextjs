@@ -15,12 +15,8 @@ function SignOutButton() {
   }
 
   return (
-    <button
-      className="cta cta__signOut"
-      onClick={handleSignOut}
-      title="sing out">
-      <span className="cta__signOutIcon"></span>
-      Singout
+    <button className="ml-2" onClick={handleSignOut} title="sing out">
+      <span className="block w-[25px] h-[25px] bg-no-repeat bg-center bg-[url('../../public/signout-button.svg')] bg-contain"></span>
     </button>
   );
 }
