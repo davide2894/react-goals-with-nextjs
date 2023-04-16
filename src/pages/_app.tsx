@@ -6,10 +6,6 @@ import initAuth from "@utils/initAuth";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
 
 export default function App({ Component, pageProps }: AppProps) {
   const firebaseConfig = {
