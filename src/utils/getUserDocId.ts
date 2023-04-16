@@ -4,5 +4,5 @@ export default function getUserDocId(
 ) {
   if (!userEmail) return;
   if (!userId) return;
-  return `${userEmail}-${userId}`;
+  return `${userEmail}${userId}`;
 }
