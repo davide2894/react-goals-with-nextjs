@@ -23,13 +23,20 @@ function Login() {
   return (
     <div
       data-testid="loginComponentTest"
-      className="hi myAccount__form myAccount__form--login formWrapper">
-      <h2>Login if you have already an account</h2>
+      className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <h2 className="text-gray-700 font-bold">
+        Login if you have already an account
+      </h2>
       <br></br>
       <form onSubmit={handleSubmit}>
-        <div className="form-control">
-          <label htmlFor="loginFormEmailInput">Email</label>
+        <div className="mb-2">
+          <label
+            className="text-gray-700 text-sm font-bold mb-2"
+            htmlFor="loginFormEmailInput">
+            Email
+          </label>
           <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="email"
             name="email"
             required
@@ -39,9 +46,14 @@ function Login() {
           />
           <span className="separator"> </span>
         </div>
-        <div className="form-control">
-          <label htmlFor="loginFormPassword">Password</label>
+        <div className="mb-4">
+          <label
+            className="text-gray-700 text-sm font-bold mb-2"
+            htmlFor="loginFormPassword">
+            Password
+          </label>
           <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="password"
             name="password"
             required
@@ -51,8 +63,12 @@ function Login() {
           />
           <span className="separator"> </span>
         </div>
-        <div className="form-control">
-          <button type="submit">Login</button>
+        <div>
+          <button
+            className="bg-yellow-500 hover:bg-yellow-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit">
+            Login
+          </button>
         </div>
       </form>
     </div>
@@ -65,3 +81,7 @@ export default withAuthUser({
   whenUnauthedAfterInit: AuthAction.RENDER,
   LoaderComponent: Loader,
 })(Login);
+
+// export const getServerSideProps = withAuthUserSSR({
+//   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+// })();

@@ -8,7 +8,7 @@ function Signin() {
     <div className="Signin">
       <Register />
       <div className="Signin__separatorH2">
-        <h2>OR</h2>
+        <h2 className="mt-8 mb-8 font-bold text-lg ml-8">OR</h2>
       </div>
       <Login />
     </div>

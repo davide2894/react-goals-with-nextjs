@@ -16,13 +16,20 @@ function Register() {
   return (
     <div
       data-testid="registerComponentTestElement"
-      className="myAccount__form myAccount__form--register formWrapper">
-      <h2>Register an account to start setting goals </h2>
+      className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <h2 className="text-gray-700 font-bold">
+        Register an account to start setting goals{" "}
+      </h2>
       <br></br>
       <form onSubmit={handleSubmit}>
-        <div className="form-control">
-          <label htmlFor="registrationFormNameInput">Name</label>
+        <div className="mb-2">
+          <label
+            className="text-gray-700 text-sm font-bold mb-2"
+            htmlFor="registrationFormNameInput">
+            Name
+          </label>
           <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             name="name"
             required
@@ -33,9 +40,14 @@ function Register() {
           />
           <span className="separator"> </span>
         </div>
-        <div className="form-control">
-          <label htmlFor="registrationFormEmailInput">Email</label>
+        <div className="mb-2">
+          <label
+            className="text-gray-700 text-sm font-bold mb-2"
+            htmlFor="registrationFormEmailInput">
+            Email
+          </label>
           <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="email"
             name="email"
             required
@@ -46,9 +58,14 @@ function Register() {
           />
           <span className="separator"> </span>
         </div>
-        <div className="form-control">
-          <label htmlFor="registrationFormPasswordInput">Password</label>
+        <div className="mb-4">
+          <label
+            className="text-gray-700 text-sm font-bold mb-2"
+            htmlFor="registrationFormPasswordInput">
+            Password
+          </label>
           <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="password"
             name="password"
             required
@@ -59,8 +76,12 @@ function Register() {
           />
           <span className="separator"> </span>
         </div>
-        <div className="form-control">
-          <button type="submit">Register</button>
+        <div>
+          <button
+            className="bg-yellow-500 hover:bg-yellow-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit">
+            Register
+          </button>
         </div>
       </form>
     </div>
