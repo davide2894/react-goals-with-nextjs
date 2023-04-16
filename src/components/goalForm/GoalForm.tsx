@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addGoal, updateGoal } from "../../redux/slices/goalSlice";
 import { v4 as uuidv4 } from "uuid";
-import { Goal, FormProps } from "../../types";
+import { GoalType, FormProps } from "../../types";
 import SubmitButton from "@components/submitButton/SubmitButton";
 //@TODO tailwind -> import "./GoalForm.scss";
 
@@ -19,7 +19,7 @@ function GoalForm(props: FormProps) {
   function onFormSubmit(evt) {
     evt.preventDefault();
 
-    const goal: Goal = {
+    const goal: GoalType = {
       title: goalTitle,
       score: {
         max: parseInt(goalScore),
@@ -43,11 +43,16 @@ function GoalForm(props: FormProps) {
   }
 
   return (
-    <form onSubmit={(evt) => onFormSubmit(evt)}>
-      <div className="goalForm__name">
-        <label htmlFor="nameInput" className="goalForm__nameLabel">
+    <form
+      className="shadow-md rounded pt-6 pb-8 mb-4"
+      onSubmit={(evt) => onFormSubmit(evt)}>
+      <div className="goalForm__name mb-4">
+        <label
+          htmlFor="nameInput"
+          className="goalForm__nameLabel block text-sm font-bold mb-2">
           Goal title:
           <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             name="name"
             required
@@ -59,10 +64,11 @@ function GoalForm(props: FormProps) {
           />
         </label>
       </div>
-      <div className="goalForm__score">
-        <label htmlFor="scoreInput">
+      <div className="mb-5">
+        <label htmlFor="scoreInput" className="block text-sm font-bold mb-2">
           times to meet per week
           <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
             type="number"
             required
             name="score"
@@ -75,7 +81,6 @@ function GoalForm(props: FormProps) {
           />
         </label>
       </div>
-      <button type="submit" value="Submit">
       <SubmitButton text="Submit" />
     </form>
   );
