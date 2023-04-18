@@ -1,8 +1,8 @@
-import { Goal } from "../types";
+import { GoalType } from "@types";
 import isEqual from "lodash.isequal";
 
-const getDifference = (arr1: Array<Goal>, arr2: Array<Goal>) => {
-  let goalToReturn: Goal = {
+const getDifference = (arr1: Array<GoalType>, arr2: Array<GoalType>) => {
+  let goalToReturn: GoalType = {
     id: "",
     title: "",
     score: {
