@@ -8,7 +8,7 @@ function SignOutButton() {
   function handleSignOut() {
     signOut(auth)
       .then(() => {
-        router.push("/");
+        console.log("signedout");
       })
       .catch((error) => {
         console.error(error.message);
