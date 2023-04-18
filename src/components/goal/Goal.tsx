@@ -13,65 +13,60 @@ import ButtonIcon from "@components/buttonIcon/ButtonIcon";
 function Goal({ goal }: any) {
   const [showEditGoalForm, setShowEditGoalForm] = useState(false);
   const isComplete = goal.score.actual === goal.score.max;
-  const goalWrapperClasses = `goal ${
-    goal && isComplete ? "goal--isComplete" : ""
-  }`;
   const dispatch = useDispatch();
-
+  const goalCsslasses = `mb-6 ${isComplete ? "text-yellow-500" : "text-white"}`;
+  const testTitleCssClasses = `text-lg ${
+    isComplete ? "after:content-['✓'] after:ml-2" : ""
+  }`;
   function onEditFormOpenHandler() {
     setShowEditGoalForm(true);
   }
 
   return (
-    <div data-testid="goalTest" className={goalWrapperClasses}>
-      <p className="goal__title">{goal.title}</p>
-      <div className="score">
-        <div className="score__numbers">
-          <span className="score__actual">{goal.score.actual}</span>
-          <span className="score__separator">/</span>
-          <span className="score__toReach">{goal.score.max}</span>
+    <div data-testid="goalTest" className={goalCsslasses}>
+      <p className={testTitleCssClasses}>{goal.title}</p>
+      <div className="flex mt-2 items-end">
+        <div className="text-2xl">
+          <span>{goal.score.actual}</span>
+          <span>/</span>
+          <span>{goal.score.max}</span>
         </div>
-        <div className="score__ctas">
+        <div className="ml-4 mr-4">
           <button
             title="decrease score by 1"
-            className="score__button score__button--decrease mr-4"
+            className="mr-2 ml-2 group"
             onClick={() => dispatch(decrementScore(goal))}
             disabled={goal.score.actual === goal.score.min || isComplete}>
-            <span className="icon score__buttonIcon score__buttonIcon--decreaseScore"></span>
-            -1
+            <ButtonIcon iconName="score-decrease-button" />
           </button>
           <button
             title="increase score by 1"
-            className="score__button score__button--increase"
+            className="group"
             onClick={() => dispatch(incrementScore(goal))}
             disabled={goal.score.actual === goal.score.max || isComplete}>
-            <span className="icon score__buttonIcon score__buttonIcon--increaseScore"></span>
-            +1
+            <ButtonIcon iconName="score-increase-button" />
           </button>
         </div>
-        <div className="score__otherActionsWrapper">
+        <div>
           <button
             title="edit goal"
-            className="score__button score__button--edit mr-4"
+            className="mr-4 group"
             disabled={isComplete}
             onClick={onEditFormOpenHandler}>
-            <span className="icon score__buttonIcon score__buttonIcon--edit"></span>
-            Edit
+            <ButtonIcon iconName="edit-button" />
           </button>
           <button
+            className="mr-4 group"
             title="delete goal"
-            className="score__button score__button--delete mr-4"
             onClick={() => dispatch(deleteGoal(goal))}>
-            <span className="icon score__buttonIcon score__buttonIcon--delete"></span>
-            Delete
+            <ButtonIcon iconName="delete-button" />
           </button>
           <button
-            title="reset goal score"
-            className="score__button score__button--reset"
+            className="group"
+            title=""
             disabled={goal.score.actual === 0}
             onClick={() => dispatch(resetGoal(goal))}>
-            <span className="icon score__buttonIcon score__buttonIcon--reset"></span>
-            Resete
+            <ButtonIcon iconName="reset-button" />
           </button>
           {showEditGoalForm && (
             <Modal mode="edit" onClose={() => setShowEditGoalForm(false)}>
