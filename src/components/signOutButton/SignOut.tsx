@@ -17,7 +17,7 @@ function SignOutButton() {
 
   return (
     <button className="ml-2" onClick={handleSignOut} title="sing out">
-      <span className="block w-[25px] h-[25px] bg-no-repeat bg-center bg-[url('../../public/signout-button.svg')] bg-contain"></span>
+      <ButtonIcon iconName="signout-button" />
     </button>
   );
 }
