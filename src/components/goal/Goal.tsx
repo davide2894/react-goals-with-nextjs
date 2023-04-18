@@ -1,4 +1,3 @@
-// @TODO tailwind -> import "./Goal.scss";
 import Modal from "@components/modal/Modal";
 import GoalForm from "@components/goalForm/GoalForm";
 import { useState } from "react";

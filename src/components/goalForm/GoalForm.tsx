@@ -4,7 +4,6 @@ import { addGoal, updateGoal } from "@redux/slices/goalSlice";
 import { v4 as uuidv4 } from "uuid";
 import { GoalType, FormProps } from "@types";
 import SubmitButton from "@components/submitButton/SubmitButton";
-//@TODO tailwind -> import "./GoalForm.scss";
 
 function GoalForm(props: FormProps) {
   const [goalTitle, setGoalTitle] = useState(

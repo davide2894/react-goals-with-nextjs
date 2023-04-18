@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-// @TODO tailwind -> import "./Modal.scss";
 
 function Modal(props) {
   const { mode, onClose } = props;
