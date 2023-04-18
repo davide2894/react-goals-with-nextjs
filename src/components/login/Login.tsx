@@ -1,6 +1,6 @@
 import { useState, SyntheticEvent, ChangeEvent } from "react";
-import { loginWithEmailAndPassword } from "../../firebase";
-import { AuthAction, withAuthUser, withAuthUserSSR } from "next-firebase-auth";
+import { loginWithEmailAndPassword } from "@firebase";
+import { AuthAction, withAuthUser } from "next-firebase-auth";
 import Loader from "@components/loader/Loader";
 import SubmitButton from "@components/submitButton/SubmitButton";
 

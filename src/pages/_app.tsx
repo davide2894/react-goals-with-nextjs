@@ -1,6 +1,6 @@
 import "@styles/globals.css";
 import type { AppProps } from "next/app";
-import { store } from "../redux/store";
+import { store } from "@redux/store";
 import { Provider } from "react-redux";
 import initAuth from "@utils/initAuth";
 import firebase from "firebase/compat/app";

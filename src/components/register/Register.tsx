@@ -1,5 +1,5 @@
 import React, { SyntheticEvent, useState } from "react";
-import { registerWithEmailAndPassword } from "../../firebase";
+import { registerWithEmailAndPassword } from "@firebase";
 import Loader from "@components/loader/Loader";
 import { withAuthUser, AuthAction } from "next-firebase-auth";
 import SubmitButton from "@components/submitButton/SubmitButton";

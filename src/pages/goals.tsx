@@ -1,6 +1,5 @@
 import Goal from "@components/goal/Goal";
-import { GoalType } from "../types";
-//TODO tailwind -> import "./Goals.scss";
+import { GoalType } from "@types";
 import NewGoalButton from "@components/newGoalButton/NewGoalButton";
 import { useAppSelector } from "@redux/store";
 import { ReactFragment, useEffect } from "react";

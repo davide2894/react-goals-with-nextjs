@@ -1,6 +1,6 @@
 // @TODO tailwind -> import "./Goal.scss";
-import Modal from "../modal/Modal";
-import GoalForm from "../goalForm/GoalForm";
+import Modal from "@components/modal/Modal";
+import GoalForm from "@components/goalForm/GoalForm";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
@@ -8,7 +8,8 @@ import {
   deleteGoal,
   resetGoal,
   incrementScore,
-} from "../../redux/slices/goalSlice";
+} from "@redux/slices/goalSlice";
+import ButtonIcon from "@components/buttonIcon/ButtonIcon";
 
 function Goal({ goal }: any) {
   const [showEditGoalForm, setShowEditGoalForm] = useState(false);

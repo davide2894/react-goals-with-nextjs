@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addGoal, updateGoal } from "../../redux/slices/goalSlice";
+import { addGoal, updateGoal } from "@redux/slices/goalSlice";
 import { v4 as uuidv4 } from "uuid";
-import { GoalType, FormProps } from "../../types";
+import { GoalType, FormProps } from "@types";
 import SubmitButton from "@components/submitButton/SubmitButton";
 //@TODO tailwind -> import "./GoalForm.scss";
 

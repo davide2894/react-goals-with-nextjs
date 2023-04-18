@@ -1,3 +1,4 @@
+import ButtonIcon from "@components/buttonIcon/ButtonIcon";
 import { auth } from "@firebase";
 import { signOut } from "firebase/auth";
 import router from "next/router";

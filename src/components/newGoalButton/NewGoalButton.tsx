@@ -1,7 +1,7 @@
 //@TODO: tailwing -> import "./NewGoalButton.scss";
 import { useState } from "react";
 import GoalForm from "../goalForm/GoalForm";
-import Modal from "../modal/Modal";
+import Modal from "@components/modal/Modal";
 
 function NewGoalButton() {
   const [showNewGoalForm, setShowNewGoalForm] = useState(false);
