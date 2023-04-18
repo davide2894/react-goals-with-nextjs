@@ -20,6 +20,7 @@
       "@pages*": ["./src/pages*"],
       "@redux*": ["./src/redux*"],
       "@firebase": ["./src/firebase"],
+      "@types": ["./src/types"],
       "@utils*": ["./src/utils*"]
     }
   },
