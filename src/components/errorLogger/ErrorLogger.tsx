@@ -1,8 +1,7 @@
-
-function ErrorLogger({ errorMessage }) {
+function ErrorLogger(props: { errorMessage: string }) {
   return (
     <div className="errorMessage">
-      <h1>{errorMessage}</h1>
+      <h1>{props.errorMessage}</h1>
     </div>
   );
 }
