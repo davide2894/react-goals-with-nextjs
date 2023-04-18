@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GoalFormData } from "../../types";
+import { GoalFormData } from "@types";
 
 const initialState = {
   show: false,

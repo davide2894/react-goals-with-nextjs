@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Goal } from "../../types";
+import { GoalType } from "@types";
 
-let goals: Array<Goal> = [];
+let goals: Array<GoalType> = [];
 
 let initialState = { goals };
 
