@@ -50,14 +50,14 @@ export function Goals({ goalsFromDB }: any) {
   }
 
   return (
-    <div>
+    <div className="lg:ml-[200px] lg:mr-[200px]">
       {user.email && (
         <div className="flex items-baseline justify-end mb-6">
           <SignedInInfo email={user.email} />
           <SignOutButton />
         </div>
       )}
-      <h1 className="text-2xl underline font-bold mb-6">Goals:</h1>
+      <h1 className="text-2xl underline font-bold mb-8">Goals:</h1>
       <NewGoalButton />
       {content}
     </div>
