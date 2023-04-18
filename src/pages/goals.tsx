@@ -18,7 +18,13 @@ import {
 } from "next-firebase-auth";
 import getUserDocId from "@utils/getUserDocId";
 import { db } from "@firebase";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import {
+  collection,
+  collectionGroup,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 
 export function Goals({ goalsFromDB }: any) {
   console.log("Goals page rendered");
@@ -84,15 +90,14 @@ export const getServerSideProps = withAuthUserTokenSSR({
   let goalsFromDB: Array<GoalType> = [];
 
   try {
-    const goalsCollectionRef = collection(
-      db,
-      `/users/${getUserDocId(AuthUser.email, AuthUser.id)}/user-goals/`
-    );
-    const querySnapshot = await getDocs(
-      query(goalsCollectionRef, orderBy("title", "asc"))
+    const myGoalsRef = query(
+      collectionGroup(db, "user-goals"),
+      where("userIdRef", "==", AuthUser.id)
     );
 
-    querySnapshot.forEach((doc) => {
+    const querySnap = await getDocs(myGoalsRef);
+
+    querySnap.forEach((doc: any) => {
       goalsFromDB.push(mapGoal(doc.data() as GoalType));
     });
   } catch (error) {

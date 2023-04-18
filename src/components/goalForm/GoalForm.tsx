@@ -4,6 +4,7 @@ import { addGoal, updateGoal } from "@redux/slices/goalSlice";
 import { v4 as uuidv4 } from "uuid";
 import { GoalType, FormProps } from "@types";
 import SubmitButton from "@components/submitButton/SubmitButton";
+import { useAuthUser } from "next-firebase-auth";
 
 function GoalForm(props: FormProps) {
   const [goalTitle, setGoalTitle] = useState(
@@ -14,6 +15,7 @@ function GoalForm(props: FormProps) {
   );
 
   const dispatch = useDispatch();
+  const user = useAuthUser();
 
   function onFormSubmit(evt) {
     evt.preventDefault();
@@ -26,6 +28,7 @@ function GoalForm(props: FormProps) {
         actual: 0,
       },
       id: props.goalToEditId ? props.goalToEditId : uuidv4(),
+      userIdRef: user.id,
     };
 
     if (props.mode) {
