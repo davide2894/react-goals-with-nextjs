@@ -78,7 +78,3 @@ export default withAuthUser({
   whenUnauthedAfterInit: AuthAction.RENDER,
   LoaderComponent: Loader,
 })(Login);
-
-// export const getServerSideProps = withAuthUserSSR({
-//   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
-// })();
