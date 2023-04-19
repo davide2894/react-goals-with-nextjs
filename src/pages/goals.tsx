@@ -22,6 +22,7 @@ import {
   collection,
   collectionGroup,
   getDocs,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -92,7 +93,8 @@ export const getServerSideProps = withAuthUserTokenSSR({
   try {
     const myGoalsRef = query(
       collectionGroup(db, "user-goals"),
-      where("userIdRef", "==", AuthUser.id)
+      where("userIdRef", "==", AuthUser.id),
+      orderBy("timestamp")
     );
 
     const querySnap = await getDocs(myGoalsRef);

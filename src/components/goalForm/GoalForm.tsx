@@ -29,6 +29,7 @@ function GoalForm(props: FormProps) {
       },
       id: props.goalToEditId ? props.goalToEditId : uuidv4(),
       userIdRef: user.id,
+      timestamp: Date.now(),
     };
 
     if (props.mode) {
