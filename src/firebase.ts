@@ -24,7 +24,7 @@ const firebaseConfig = {
 };
 
 let db: firebase.firestore.Firestore | FirebaseFirestore;
-let auth: Auth | FirebaseAuth;
+let auth: any;
 let provider: firebase.auth.GoogleAuthProvider;
 
 const initFirebase = () => {

@@ -1,6 +1,6 @@
 import ButtonIcon from "@components/buttonIcon/ButtonIcon";
 import { auth } from "@firebase";
-import { resetGoals, syncWithBackend } from "@redux/slices/goalSlice";
+import { resetGoals } from "@redux/slices/goalSlice";
 import { signOut } from "firebase/auth";
 import React from "react";
 import { useDispatch } from "react-redux";
