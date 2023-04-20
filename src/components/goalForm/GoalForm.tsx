@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addGoal, updateGoal } from "@redux/slices/goalSlice";
 import { v4 as uuidv4 } from "uuid";
@@ -17,7 +17,7 @@ function GoalForm(props: FormProps) {
   const dispatch = useDispatch();
   const user = useAuthUser();
 
-  function onFormSubmit(evt) {
+  function onFormSubmit(evt: SyntheticEvent) {
     evt.preventDefault();
 
     const goal: GoalType = {

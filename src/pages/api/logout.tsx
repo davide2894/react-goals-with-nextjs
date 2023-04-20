@@ -1,13 +1,13 @@
 import { unsetAuthCookies } from "next-firebase-auth";
-import initAuth from "../../utils/initAuth";
+import initAuth from "@utils/initAuth";
+import { NextApiRequest, NextApiResponse } from "next";
 
 initAuth();
 
-const handler = async (req, res) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     await unsetAuthCookies(req, res);
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error(e);
     return res.status(500).json({ error: "Unexpected error." });
   }

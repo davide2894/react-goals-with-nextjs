@@ -1,9 +1,3 @@
-export interface User {
-  email: string;
-  uid: string;
-  userDocId: string;
-}
-
 export interface GoalFormData {
   show: boolean;
   goalTitle: string;
@@ -17,7 +11,9 @@ export interface GoalType {
     min: number;
     actual: number;
   };
-  id: string;
+  id: string | number;
+  userIdRef: string | null;
+  timestamp: number;
 }
 
 export interface FormProps {
@@ -25,5 +21,7 @@ export interface FormProps {
   titleToEdit?: string;
   maxScoreToEdit?: string;
   mode?: string;
-  onGoalFormSubmit?: () => void;
+  onGoalFormSubmit?: any;
 }
+
+export type UserDocId = string | undefined;

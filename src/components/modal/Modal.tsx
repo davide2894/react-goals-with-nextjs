@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { ReactNode, SetStateAction, SyntheticEvent, useEffect } from "react";
 
-function Modal(props) {
-  const { mode, onClose } = props;
+function Modal(props: { onClose: any; children?: ReactNode; mode?: string }) {
+  const { mode, onClose, children } = props;
 
   useEffect(() => {
     function handleEscapeKey(event: KeyboardEvent) {
@@ -18,7 +18,7 @@ function Modal(props) {
     props.onClose();
   }
 
-  function closeModalOnClickOutside(evt) {
+  function closeModalOnClickOutside(evt: SyntheticEvent) {
     evt.stopPropagation();
     evt.preventDefault();
     evt.currentTarget.classList.contains("modalOverlay") && props.onClose();
@@ -40,7 +40,7 @@ function Modal(props) {
         }}>
         <div>
           <h2>{mode === "add" ? "Add Goal" : "Edit Goal"}</h2>
-          {props.children}
+          {children}
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-// Import the functions you need from the SDKs you need
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
@@ -9,21 +8,7 @@ import {
 import { setDoc, doc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import getUserDocId from "@utils/getUserDocId";
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyDWuRUVtL5iesMW5-6Ugqv7pmitY_f-aoU",
-  authDomain: "react-daily-goal-tracker.firebaseapp.com",
-  projectId: "react-daily-goal-tracker",
-  storageBucket: "react-daily-goal-tracker.appspot.com",
-  messagingSenderId: "127766768496",
-  appId: "1:127766768496:web:6580c3395f8f939587fdb5",
-};
-
-firebase.initializeApp(firebaseConfig);
+import updateFirestoreDoc from "@utils/updateFireStoreDB";
 
 const provider = new firebase.auth.GoogleAuthProvider();
 const db = firebase.firestore();
@@ -33,7 +18,11 @@ provider.setCustomParameters({
   prompt: "select_account",
 });
 
-const registerWithEmailAndPassword = async (name, email, password) => {
+const registerWithEmailAndPassword = async (
+  name: string,
+  email: string,
+  password: string
+) => {
   try {
     const registrationResult = await createUserWithEmailAndPassword(
       auth,
@@ -42,13 +31,32 @@ const registerWithEmailAndPassword = async (name, email, password) => {
     );
     const user = registrationResult.user;
     const userDocId = getUserDocId(user.email, user.uid);
-    await setDoc(doc(db, "users", userDocId), {
+    const userDocRef = doc(db, `users/${userDocId}`);
+    await setDoc(userDocRef, {
       name,
       email,
       uid: user.uid,
       authProvider: "local",
       refreshToken: user.refreshToken,
     });
+
+    if (userDocId) {
+      updateFirestoreDoc(
+        userDocId,
+        {
+          title: "this is an example goal. You should start adding yours! :)",
+          score: {
+            max: 5,
+            min: 0,
+            actual: 0,
+          },
+          id: "exampleId",
+          userIdRef: user.uid,
+          timestamp: Date.now(),
+        },
+        "add"
+      );
+    }
   } catch (err) {
     alert(
       "There is an issue with the inserted email or password. Please try again"
@@ -56,7 +64,7 @@ const registerWithEmailAndPassword = async (name, email, password) => {
   }
 };
 
-const loginWithEmailAndPassword = async (email, password) => {
+const loginWithEmailAndPassword = async (email: string, password: string) => {
   try {
     const res = await signInWithEmailAndPassword(auth, email, password);
     const user = res.user;
