@@ -2,6 +2,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import {
+  Auth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
@@ -9,14 +10,44 @@ import { setDoc, doc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import getUserDocId from "@utils/getUserDocId";
 import updateFirestoreDoc from "@utils/updateFireStoreDB";
+import initAuth from "@utils/initAuth";
+import { FirebaseFirestore } from "@firebase/firestore-types";
+import { FirebaseAuth } from "@firebase/auth-types";
 
-const provider = new firebase.auth.GoogleAuthProvider();
-const db = firebase.firestore();
-const auth = getAuth();
+const firebaseConfig = {
+  apiKey: "AIzaSyDWuRUVtL5iesMW5-6Ugqv7pmitY_f-aoU",
+  authDomain: "react-daily-goal-tracker.firebaseapp.com",
+  projectId: "react-daily-goal-tracker",
+  storageBucket: "react-daily-goal-tracker.appspot.com",
+  messagingSenderId: "127766768496",
+  appId: "1:127766768496:web:6580c3395f8f939587fdb5",
+};
 
-provider.setCustomParameters({
-  prompt: "select_account",
-});
+let db: firebase.firestore.Firestore | FirebaseFirestore;
+let auth: Auth | FirebaseAuth;
+let provider: firebase.auth.GoogleAuthProvider;
+
+const initFirebase = () => {
+  firebase.initializeApp(firebaseConfig);
+  initFirestoreDb();
+  initFirebaseAuth();
+  initFirebaseProvider();
+  provider.setCustomParameters({
+    prompt: "select_account",
+  });
+};
+
+const initFirestoreDb = () => {
+  db = firebase.firestore();
+};
+
+const initFirebaseAuth = () => {
+  auth = getAuth();
+};
+
+const initFirebaseProvider = () => {
+  provider = new firebase.auth.GoogleAuthProvider();
+};
 
 const registerWithEmailAndPassword = async (
   name: string,
@@ -81,6 +112,7 @@ export {
   provider,
   db,
   auth,
+  initFirebase,
   registerWithEmailAndPassword,
   loginWithEmailAndPassword,
 };
