@@ -1,6 +1,8 @@
 import React from "react";
 import Register from "@components/register/Register";
 import Login from "@components/login/Login";
+import { AuthAction, withAuthUser } from "next-firebase-auth";
+import Loader from "@components/loader/Loader";
 
 function Signin() {
   return (
@@ -14,4 +16,9 @@ function Signin() {
   );
 }
 
-export default Signin;
+export default withAuthUser({
+  whenAuthed: AuthAction.REDIRECT_TO_APP,
+  whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
+  whenUnauthedAfterInit: AuthAction.RENDER,
+  LoaderComponent: Loader,
+})(Signin);
