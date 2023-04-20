@@ -58,6 +58,9 @@ export const goalSlice = createSlice({
     syncWithBackend: (state, action) => {
       state.goals = action.payload;
     },
+    resetGoals: (state) => {
+      state.goals = [];
+    },
   },
 });
 
@@ -69,5 +72,6 @@ export const {
   incrementScore,
   decrementScore,
   syncWithBackend,
+  resetGoals,
 } = goalSlice.actions;
 export default goalSlice.reducer;
