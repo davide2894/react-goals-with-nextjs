@@ -6,6 +6,7 @@ import initAuth from "@utils/initAuth";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import Layout from "@components/layout/Layout";
 
 export default function App({ Component, pageProps }: AppProps) {
   const firebaseConfig = {
@@ -17,13 +18,15 @@ export default function App({ Component, pageProps }: AppProps) {
     appId: "1:127766768496:web:6580c3395f8f939587fdb5",
   };
 
-  firebase.initializeApp(firebaseConfig);
-
   initAuth();
+
+  firebase.initializeApp(firebaseConfig);
 
   return (
     <Provider store={store}>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </Provider>
   );
 }
