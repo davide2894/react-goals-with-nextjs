@@ -10,6 +10,8 @@ const getDifference = (arr1: Array<GoalType>, arr2: Array<GoalType>) => {
       max: 0,
       actual: 0,
     },
+    userIdRef: "",
+    timestamp: 0,
   };
   let typeOfDifference: string = "";
 
