@@ -2,7 +2,7 @@ import Goal from "@components/goal/Goal";
 import { GoalType } from "@types";
 import NewGoalButton from "@components/newGoalButton/NewGoalButton";
 import { useAppSelector } from "@redux/store";
-import { ReactFragment, useEffect } from "react";
+import { useEffect } from "react";
 import { useDebounce } from "use-debounce";
 import useSyncFirestoreDb from "@utils/useSyncFirestoreDB";
 import { useDispatch } from "react-redux";
@@ -19,7 +19,6 @@ import {
 import getUserDocId from "@utils/getUserDocId";
 import { db } from "@firebase";
 import {
-  collection,
   collectionGroup,
   getDocs,
   orderBy,
@@ -50,11 +49,9 @@ export function Goals({ goalsFromDB }: any) {
 
   let content;
 
-  if (goalsFromDB && goalsFromDB.length && goals && goals.length) {
-    content = goals.map((goal) => {
-      return <Goal key={goal.id} goal={goal} />;
-    });
-  }
+  content = goals?.map((goal: GoalType) => {
+    return <Goal key={goal.id} goal={goal} />;
+  });
 
   return (
     <div className="lg:ml-[200px] lg:mr-[200px]">
@@ -85,6 +82,8 @@ export const getServerSideProps = withAuthUserTokenSSR({
       title: goalObjectFromFirestore.title,
       score: goalObjectFromFirestore.score,
       id: goalObjectFromFirestore.id,
+      userIdRef: goalObjectFromFirestore.userIdRef,
+      timestamp: goalObjectFromFirestore.timestamp,
     };
   };
 
