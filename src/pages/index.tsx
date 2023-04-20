@@ -15,8 +15,6 @@ function Home(props: { route: string; text: string }) {
   );
 }
 
-export default Home;
-
 export const getServerSideProps = withAuthUserTokenSSR({})(
   async ({ AuthUser }) => {
     const user = AuthUser;
@@ -40,3 +38,5 @@ export const getServerSideProps = withAuthUserTokenSSR({})(
     };
   }
 );
+
+export default Home;
