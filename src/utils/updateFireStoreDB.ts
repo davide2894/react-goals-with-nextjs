@@ -14,7 +14,6 @@ const updateFirestoreDoc = async (
     } else {
       await setDoc(docRef, goal, { merge: true });
     }
-    return "ok";
   } catch (err) {
     return { error: err };
   }
