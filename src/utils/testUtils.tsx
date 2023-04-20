@@ -1,28 +1,58 @@
-import { configureStore } from "@reduxjs/toolkit";
+import React, { PropsWithChildren } from "react";
 import { render } from "@testing-library/react";
-import goalFormReducer from "../redux/slices/goalFormSlice";
-import { firestoreApi } from "../redux/slices/goalsApi";
+import type { RenderOptions } from "@testing-library/react";
+import { Store, configureStore } from "@reduxjs/toolkit";
+import goalFormReducer from "@redux/slices/goalFormSlice";
+import type { PreloadedState } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
+import { RootState } from "@redux/store";
+import { GoalFormData } from "@types";
 
+// This type interface extends the default options for render from RTL, as well
+// as allows the user to specify other things such as initialState, store.
+interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
+  preloadedState?: PreloadedState<RootState>;
+  store?: Store;
+}
 //sources:
 // - https://www.freecodecamp.org/news/how-to-write-unit-tests-in-react-redux/#-how-to-perform-testing-with-the-react-redux-toolkit
 // - https://redux.js.org/usage/writing-tests#setting-up-a-reusable-test-render-function
 export function renderWithProviders(
-  ui,
+  ui: React.ReactElement,
   {
-    preloadedState = {},
+    preloadedState = {
+      goalFormReducer: {
+        show: false,
+        goalTitle: "goal title example",
+        goalScore: "0",
+      },
+      goalReducer: {
+        goals: [
+          {
+            title: "goal title example",
+            score: {
+              max: 0,
+              min: 0,
+              actual: 0,
+            },
+            id: "explampleId",
+            userIdRef: "exampleUserIdRef",
+            timestamp: Date.now(),
+          },
+        ],
+      },
+    },
     // Automatically create a store instance if no store was passed in
     store = configureStore({
       reducer: {
         goalFormReducer: goalFormReducer,
-        [firestoreApi.reducerPath]: firestoreApi.reducer,
       },
       preloadedState,
     }),
     ...renderOptions
-  } = {}
+  }: ExtendedRenderOptions = {}
 ) {
-  function Wrapper({ children }) {
+  function Wrapper({ children }: PropsWithChildren<{}>): JSX.Element {
     return <Provider store={store}>{children}</Provider>;
   }
 
