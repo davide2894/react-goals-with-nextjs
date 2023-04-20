@@ -26,7 +26,7 @@ function Modal(props: { onClose: any; children?: ReactNode; mode?: string }) {
 
   return (
     <div
-      className="absolute top-0 bottom-0 left-0 right-0 bg-transparent backdrop-blur-md z-10"
+      className="modalOverlay absolute top-0 bottom-0 left-0 right-0 bg-transparent backdrop-blur-md z-10"
       onClick={(evt) => closeModalOnClickOutside(evt)}>
       <button
         className="absolute top-0 right-0 w-[55px] h-[55px]"
