@@ -6,10 +6,8 @@ export default function Document() {
     <Html lang="en">
       <Head />
       <body className="min-h-screen font-sans">
-        <Layout>
-          <Main />
-          <NextScript />
-        </Layout>
+        <Main />
+        <NextScript />
       </body>
     </Html>
   );

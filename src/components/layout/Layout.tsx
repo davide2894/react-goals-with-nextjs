@@ -1,6 +1,6 @@
 function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <div>
         <h1 className="text-2xl font-bold mt-16 text-center">
           WELCOME TO DAILY GOAL TRACKER
@@ -9,7 +9,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
       <div>{children}</div>
 
-      <footer className="absolute bottom-1 text-lg mt-12">
+      <footer className="text-lg mt-auto">
         <p>Made with determination and ☕ by Davide Iaiunese</p>
       </footer>
     </div>
