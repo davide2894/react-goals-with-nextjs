@@ -10,8 +10,8 @@ test("Login component renders correctly", () => {
   render(<Login />);
   const loginComponentWrapper = screen.getByTestId("loginComponentTest");
   expect(loginComponentWrapper).toBeInTheDocument();
-  expect(loginComponentWrapper).toHaveClass("myAccount__form");
-  expect(loginComponentWrapper).toHaveClass("myAccount__form--login");
+  expect(loginComponentWrapper).toHaveClass("bg-white");
+  expect(loginComponentWrapper).toHaveClass("shadow-md");
 });
 
 test("Login component matches its own snapshot", () => {

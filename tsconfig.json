@@ -19,10 +19,11 @@
       "@styles*": ["./src/styles/*"],
       "@pages*": ["./src/pages*"],
       "@redux*": ["./src/redux*"],
-      "@firebase": ["./src/firebase"],
+      "@firebase": ["./src/firebase.ts"],
       "@types": ["./src/types"],
       "@utils*": ["./src/utils*"]
-    }
+    },
+    "baseUrl": "."
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
