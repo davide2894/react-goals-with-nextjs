@@ -73,7 +73,7 @@ function GoalForm(props: FormProps) {
       </div>
       <div className="mb-5">
         <label htmlFor="scoreInput" className={labelCssClasses}>
-          times to meet per week
+          Times to meet per week:
           <input
             className={inputCssClasses}
             type="number"
