@@ -1,17 +1,19 @@
 import Modal from "@components/modal/Modal";
 import GoalForm from "@components/goalForm/GoalForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   decrementScore,
   deleteGoal,
   resetGoal,
   incrementScore,
+  updateGoalTitle,
 } from "@redux/slices/goalSlice";
 import ButtonIcon from "@components/buttonIcon/ButtonIcon";
 
 function Goal({ goal }: any) {
   const [showEditGoalForm, setShowEditGoalForm] = useState(false);
+  const [editableTitleValue, setEditableTitleValue] = useState(goal.title);
   const isComplete = goal.score.actual === goal.score.max;
   const dispatch = useDispatch();
   const goalCsslasses = `mb-6 ${isComplete ? "text-yellow-500" : "text-white"}`;
@@ -22,9 +24,39 @@ function Goal({ goal }: any) {
     setShowEditGoalForm(true);
   }
 
+  function handleTitleChange(e: { target: { innerHTML: string } }) {
+    const trimmedEventValue = e.target.innerHTML
+      .trim()
+      .replace(/(?:^[\s\u00a0]+)/g, "")
+      .replace(/(?:[\s\u00a0]+$)/g, "")
+      .replace(/&nbsp;/gi, "")
+      .replace(/<br>/gi, "\n")
+      .replace(/<div>/gi, "\n")
+      .replace(/<(.*?)>/gi, "")
+      .split("\n")
+      .map((line) => {
+        return line.trim();
+      })
+      .join("\n");
+    if (editableTitleValue !== trimmedEventValue) {
+      setEditableTitleValue(trimmedEventValue);
+    }
+  }
+
+  useEffect(() => {
+    dispatch(updateGoalTitle({ goal, editableTitleValue }));
+    return () => {};
+  }, [editableTitleValue]);
+
   return (
     <div data-testid="goalTest" className={goalCsslasses}>
-      <p className={testTitleCssClasses}>{goal.title}</p>
+      <p
+        contentEditable="true"
+        suppressContentEditableWarning={true}
+        onBlur={handleTitleChange}
+        className={testTitleCssClasses}>
+        {editableTitleValue}
+      </p>
       <div className="flex mt-2 items-end">
         <div className="text-2xl">
           <span>{goal.score.actual}</span>

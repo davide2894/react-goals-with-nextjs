@@ -1,9 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { GoalType } from "@types";
+import { WritableDraft } from "immer/dist/internal";
 
 let goals: Array<GoalType> = [];
 
 let initialState = { goals };
+
+const getGoalToUpdate = (
+  state: WritableDraft<{ goals: GoalType[] }>,
+  action: { payload: any; type?: string }
+) => {
+  return state.goals.find((goal: GoalType) => goal.id === action.payload.id);
+};
 
 export const goalSlice = createSlice({
   name: "goalsSlice",
@@ -19,6 +27,15 @@ export const goalSlice = createSlice({
       if (goalToUpdate) {
         goalToUpdate.title = action.payload.title;
         goalToUpdate.score.max = action.payload.score.max;
+      }
+    },
+    updateGoalTitle: (state, action) => {
+      const goalToUpdate = state.goals.find(
+        (goal) => goal.id === action.payload.goal.id
+      );
+
+      if (goalToUpdate) {
+        goalToUpdate.title = action.payload.editableTitleValue;
       }
     },
     incrementScore: (state, action) => {
@@ -48,9 +65,7 @@ export const goalSlice = createSlice({
       }
     },
     resetGoal: (state, action) => {
-      const goalToUpdate = state.goals.find(
-        (goal) => goal.id === action.payload.id
-      );
+      const goalToUpdate = getGoalToUpdate(state, action);
       if (goalToUpdate) {
         goalToUpdate.score.actual = 0;
       }
@@ -67,6 +82,7 @@ export const goalSlice = createSlice({
 export const {
   addGoal,
   updateGoal,
+  updateGoalTitle,
   deleteGoal,
   resetGoal,
   incrementScore,
