@@ -21,45 +21,32 @@ export const goalSlice = createSlice({
       state.goals.push(action.payload);
     },
     updateGoal: (state, action) => {
-      const goalToUpdate = state.goals.find(
-        (goal) => goal.id === action.payload.id
-      );
+      const goalToUpdate = getGoalToUpdate(state, action);
       if (goalToUpdate) {
         goalToUpdate.title = action.payload.title;
         goalToUpdate.score.max = action.payload.score.max;
       }
     },
     updateGoalTitle: (state, action) => {
-      const goalToUpdate = state.goals.find(
-        (goal) => goal.id === action.payload.goal.id
-      );
-
+      const goalToUpdate = getGoalToUpdate(state, action);
       if (goalToUpdate) {
-        goalToUpdate.title = action.payload.editableTitleValue;
+        goalToUpdate.title = action.payload.newTitle;
       }
     },
     incrementScore: (state, action) => {
-      const goalToUpdate = state.goals.find(
-        (goal) => goal.id === action.payload.id
-      );
-
+      const goalToUpdate = getGoalToUpdate(state, action);
       if (goalToUpdate) {
         goalToUpdate.score.actual += 1;
       }
     },
     decrementScore: (state, action) => {
-      const goalToUpdate = state.goals.find(
-        (goal) => goal.id === action.payload.id
-      );
-
+      const goalToUpdate = getGoalToUpdate(state, action);
       if (goalToUpdate) {
         goalToUpdate.score.actual -= 1;
       }
     },
     deleteGoal: (state, action) => {
-      const goalToUpdate = state.goals.find(
-        (goal) => goal.id === action.payload.id
-      );
+      const goalToUpdate = getGoalToUpdate(state, action);
       if (goalToUpdate) {
         state.goals = state.goals.filter((el) => el.id !== goalToUpdate.id);
       }
