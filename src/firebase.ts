@@ -13,6 +13,7 @@ import updateFirestoreDoc from "@utils/updateFireStoreDB";
 import initAuth from "@utils/initAuth";
 import { FirebaseFirestore } from "@firebase/firestore-types";
 import { FirebaseAuth } from "@firebase/auth-types";
+import log from "@utils/log";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDWuRUVtL5iesMW5-6Ugqv7pmitY_f-aoU",
@@ -72,7 +73,8 @@ const registerWithEmailAndPassword = async (
     });
 
     if (userDocId) {
-      updateFirestoreDoc(
+      log("firebase.ts --> calling updateFirestoreDoc");
+      await updateFirestoreDoc(
         userDocId,
         {
           title: "this is an example goal. You should start adding yours! :)",
@@ -100,7 +102,7 @@ const loginWithEmailAndPassword = async (email: string, password: string) => {
     const res = await signInWithEmailAndPassword(auth, email, password);
     const user = res.user;
     if (user) {
-      console.log({ msg: "user logged successfully", user });
+      log({ msg: "user logged successfully", user });
     }
   } catch (err) {
     alert("There is an issue with your credentials. Please try again");

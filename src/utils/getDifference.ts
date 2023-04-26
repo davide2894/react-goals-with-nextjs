@@ -1,5 +1,6 @@
 import { GoalType } from "@types";
 import isEqual from "lodash.isequal";
+import log from "@utils/log";
 
 const getDifference = (arr1: Array<GoalType>, arr2: Array<GoalType>) => {
   let goalToReturn: GoalType = {
@@ -16,7 +17,7 @@ const getDifference = (arr1: Array<GoalType>, arr2: Array<GoalType>) => {
   let typeOfDifference: string = "";
 
   if (arr1.length > arr2.length) {
-    console.log("a goal was added");
+    log("a goal was added");
     // find in arr1 the goal which is not in array 2
     const newGoal = arr1.filter(
       (arr1Goal) => !arr2.some((goal) => goal.id === arr1Goal.id)
@@ -26,7 +27,7 @@ const getDifference = (arr1: Array<GoalType>, arr2: Array<GoalType>) => {
     // push this goal to firebase
   } else if (arr1.length < arr2.length) {
     // find in arr1 the goal which is not in array 2
-    console.log("a goal was deleted");
+    log("a goal was deleted");
     const deletedGoal = arr2.filter(
       (arr2Goal) => !arr1.some((goal) => goal.id === arr2Goal.id)
     );
@@ -38,13 +39,13 @@ const getDifference = (arr1: Array<GoalType>, arr2: Array<GoalType>) => {
       const goal = arr1[i];
       const existingGoal = arr2.find((arr2goal) => arr2goal.id === goal.id);
       if (existingGoal) {
-        console.log({
+        log({
           msg: "goal already exists",
           goal,
         });
         if (!isEqual(goal, existingGoal)) {
           // push update to firestore
-          console.log({
+          log({
             "compare-result": "NOT equal",
             existingGoal,
             goal,

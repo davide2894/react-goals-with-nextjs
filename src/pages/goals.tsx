@@ -25,10 +25,13 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import log from "@utils/log";
 
 export function Goals({ goalsFromDB }: any) {
-  console.log("Goals page rendered");
-  console.log(goalsFromDB);
+  log("Goals page rendered");
+  log("env: " + process.env.NODE_ENV);
+  log(goalsFromDB);
+
   const user = useAuthUser();
   const goals = useAppSelector((state) => state.goalReducer.goals);
   const dispatch = useDispatch();
@@ -36,14 +39,12 @@ export function Goals({ goalsFromDB }: any) {
   useSyncFirestoreDb(debouncedGoals[0], getUserDocId(user.email, user.id));
 
   useEffect(() => {
-    console.log("Goals -> useEffect to sync backend to local state");
+    log("Goals -> useEffect to sync backend to local state");
 
     dispatch(syncWithBackend(goalsFromDB));
 
     return () => {
-      console.log(
-        "cleaning up Goals -> useEffect to sync backend to local state"
-      );
+      log("cleaning up Goals -> useEffect to sync backend to local state");
     };
   }, [dispatch, goalsFromDB]);
 
@@ -75,6 +76,7 @@ export default withAuthUser({
 export const getServerSideProps = withAuthUserTokenSSR({
   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
 })(async ({ AuthUser }) => {
+  log("goals page - ssr pre-render");
   const mapGoal = (goalObjectFromFirestore: GoalType) => {
     return {
       title: goalObjectFromFirestore.title,
@@ -88,6 +90,9 @@ export const getServerSideProps = withAuthUserTokenSSR({
   let goalsFromDB: Array<GoalType> = [];
 
   try {
+    log("goals page - ssr pre-render --> AuthUser");
+    log({ AuthUser });
+
     const myGoalsRef = query(
       collectionGroup(db, "user-goals"),
       where("userIdRef", "==", AuthUser.id),
@@ -100,7 +105,7 @@ export const getServerSideProps = withAuthUserTokenSSR({
       goalsFromDB.push(mapGoal(doc.data() as GoalType));
     });
   } catch (error) {
-    if (error instanceof Error) console.log(error.message);
+    if (error instanceof Error) log(error.message);
   }
 
   return {

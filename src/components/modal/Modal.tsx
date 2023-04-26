@@ -1,4 +1,5 @@
-import { ReactNode, SetStateAction, SyntheticEvent, useEffect } from "react";
+import { ReactNode, SyntheticEvent, useEffect } from "react";
+import log from "@utils/log";
 
 function Modal(props: { onClose: any; children?: ReactNode; mode?: string }) {
   const { mode, onClose, children } = props;
@@ -7,7 +8,7 @@ function Modal(props: { onClose: any; children?: ReactNode; mode?: string }) {
     function handleEscapeKey(event: KeyboardEvent) {
       if (event.code === "Escape") {
         onClose();
-        console.log("escape pressed");
+        log("escape pressed");
       }
     }
     document.addEventListener("keydown", handleEscapeKey);

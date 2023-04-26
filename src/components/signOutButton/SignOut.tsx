@@ -4,6 +4,7 @@ import { resetGoals } from "@redux/slices/goalSlice";
 import { signOut } from "firebase/auth";
 import React from "react";
 import { useDispatch } from "react-redux";
+import log from "@utils/log";
 
 function SignOutButton() {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ function SignOutButton() {
   function handleSignOut() {
     signOut(auth)
       .then(() => {
-        console.log("signedout");
+        log("signedout");
         dispatch(resetGoals());
       })
       .catch((error) => {
