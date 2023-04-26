@@ -24,6 +24,7 @@ function Goal({ goal }: any) {
     setShowEditGoalForm(true);
   }
 
+  //credits: gist.github.com/nathansmith/86b5d4b23ed968a92fd4#file-2-converttotext-js
   function handleTitleChange(e: { target: { innerHTML: string } }) {
     const trimmedEventValue = e.target.innerHTML
       .trim()
@@ -38,7 +39,7 @@ function Goal({ goal }: any) {
         return line.trim();
       })
       .join("\n");
-    if (editableTitleValue !== trimmedEventValue) {
+    if (trimmedEventValue && editableTitleValue !== trimmedEventValue) {
       setEditableTitleValue(trimmedEventValue);
     }
   }
