@@ -4,7 +4,7 @@ import { WritableDraft } from "immer/dist/internal";
 
 let goals: Array<GoalType> = [];
 
-let initialState = { goals };
+const initialState = { goals };
 
 const getGoalToUpdate = (
   state: WritableDraft<{ goals: GoalType[] }>,
