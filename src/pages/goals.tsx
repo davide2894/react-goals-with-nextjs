@@ -47,7 +47,7 @@ export function Goals({ goalsFromDB }: any) {
     };
   }, [dispatch, goalsFromDB]);
 
-  const content = goals?.map((goal: GoalType) => {
+  const content = goals.map((goal: GoalType) => {
     return <Goal key={goal.id} goal={goal} />;
   });
 
