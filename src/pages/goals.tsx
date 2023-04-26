@@ -42,10 +42,6 @@ export function Goals({ goalsFromDB }: any) {
     log("Goals -> useEffect to sync backend to local state");
 
     dispatch(syncWithBackend(goalsFromDB));
-
-    return () => {
-      log("cleaning up Goals -> useEffect to sync backend to local state");
-    };
   }, [dispatch, goalsFromDB]);
 
   const content = goals.map((goal: GoalType) => {

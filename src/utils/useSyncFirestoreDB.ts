@@ -21,9 +21,6 @@ const useSyncFirestoreDb = (goals: Array<GoalType>, userDocId: UserDocId) => {
         diffResult.typeOfDifference
       );
     }
-    return () => {
-      log("cleanup");
-    };
   }, [goals, previousGoals, userDocId]);
 };
 
