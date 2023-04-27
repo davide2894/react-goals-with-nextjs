@@ -6,11 +6,10 @@ exports[`Login component matches its own snapshot 1`] = `
   data-testid="loginComponentTest"
 >
   <h2
-    className="text-gray-700 font-bold"
+    className="text-gray-700 font-bold mb-6"
   >
     Login if you have already an account
   </h2>
-  <br />
   <form
     onSubmit={[Function]}
   >
@@ -32,11 +31,6 @@ exports[`Login component matches its own snapshot 1`] = `
         type="email"
         value=""
       />
-      <span
-        className="separator"
-      >
-         
-      </span>
     </div>
     <div
       className="mb-4"
@@ -56,11 +50,6 @@ exports[`Login component matches its own snapshot 1`] = `
         type="password"
         value=""
       />
-      <span
-        className="separator"
-      >
-         
-      </span>
     </div>
     <div>
       <button
