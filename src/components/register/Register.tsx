@@ -21,7 +21,6 @@ function Register() {
       <h2 className="text-gray-700 font-bold">
         Register an account to start setting goals{" "}
       </h2>
-      <br></br>
       <form onSubmit={handleSubmit}>
         <div className="mb-2">
           <label
@@ -39,7 +38,6 @@ function Register() {
             value={name}
             onChange={(evt) => setName(evt.target.value)}
           />
-          <span className="separator"> </span>
         </div>
         <div className="mb-2">
           <label
@@ -57,7 +55,6 @@ function Register() {
             value={email}
             onChange={(evt) => setEmail(evt.target.value)}
           />
-          <span className="separator"> </span>
         </div>
         <div className="mb-4">
           <label
@@ -75,7 +72,6 @@ function Register() {
             value={password}
             onChange={(evt) => setPassword(evt.target.value)}
           />
-          <span className="separator"> </span>
         </div>
         <div>
           <SubmitButton text="Register" />
