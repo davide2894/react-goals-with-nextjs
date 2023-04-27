@@ -18,7 +18,7 @@ function Register() {
     <div
       data-testid="registerComponentTestElement"
       className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-[380px] h-[380px]">
-      <h2 className="text-gray-700 font-bold">
+      <h2 className="text-gray-700 font-bold mb-6">
         Register an account to start setting goals{" "}
       </h2>
       <form onSubmit={handleSubmit}>
