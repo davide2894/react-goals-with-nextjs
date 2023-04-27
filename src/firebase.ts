@@ -10,18 +10,28 @@ import { setDoc, doc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import getUserDocId from "@utils/getUserDocId";
 import updateFirestoreDoc from "@utils/updateFireStoreDB";
-import initAuth from "@utils/initAuth";
 import { FirebaseFirestore } from "@firebase/firestore-types";
-import { FirebaseAuth } from "@firebase/auth-types";
 import log from "@utils/log";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDWuRUVtL5iesMW5-6Ugqv7pmitY_f-aoU",
-  authDomain: "react-daily-goal-tracker.firebaseapp.com",
-  projectId: "react-daily-goal-tracker",
-  storageBucket: "react-daily-goal-tracker.appspot.com",
-  messagingSenderId: "127766768496",
-  appId: "1:127766768496:web:6580c3395f8f939587fdb5",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY
+    ? process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY
+    : "",
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    ? process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    : undefined,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    ? process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    : undefined,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    ? process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    : undefined,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSENGING_SENDER_ID
+    ? process.env.NEXT_PUBLIC_FIREBASE_MESSENGING_SENDER_ID
+    : "",
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
+    ? process.env.NEXT_PUBLIC_FIREBASE_APP_ID
+    : "",
 };
 
 let db: firebase.firestore.Firestore | FirebaseFirestore;
