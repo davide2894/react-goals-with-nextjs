@@ -21,7 +21,8 @@
       "@redux*": ["./src/redux*"],
       "@firebase": ["./src/firebase.ts"],
       "@types": ["./src/types"],
-      "@utils*": ["./src/utils*"]
+      "@utils*": ["./src/utils*"],
+      "@hooks*": ["./src/hooks*"]
     },
     "baseUrl": "."
   },

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import usePrevious from "./usePrevious";
-import getDifference from "./getDifference";
-import updateFirestoreDoc from "./updateFireStoreDB";
+import usePrevious from "@hooks/usePrevious";
+import getDifference from "@utils/getDifference";
+import updateFirestoreDoc from "@utils/updateFireStoreDB";
 import { GoalType, UserDocId } from "@types";
 import log from "@utils/log";
 
