@@ -23,10 +23,9 @@ function Login() {
     <div
       data-testid="loginComponentTest"
       className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-[380px] h-[380px]">
-      <h2 className="text-gray-700 font-bold">
+      <h2 className="text-gray-700 font-bold mb-6">
         Login if you have already an account
       </h2>
-      <br></br>
       <form onSubmit={handleSubmit}>
         <div className="mb-2">
           <label
@@ -43,7 +42,6 @@ function Login() {
             value={email}
             onChange={(evt) => handleEmailChange(evt)}
           />
-          <span className="separator"> </span>
         </div>
         <div className="mb-4">
           <label
@@ -60,7 +58,6 @@ function Login() {
             value={password}
             onChange={(evt) => handlePasswordChange(evt)}
           />
-          <span className="separator"> </span>
         </div>
         <div>
           <SubmitButton text="Login" />
