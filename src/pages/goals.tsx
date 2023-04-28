@@ -4,7 +4,7 @@ import NewGoalButton from "@components/newGoalButton/NewGoalButton";
 import { useAppSelector } from "@redux/store";
 import { useEffect } from "react";
 import { useDebounce } from "use-debounce";
-import useSyncFirestoreDb from "@utils/useSyncFirestoreDB";
+import useSyncFirestoreDb from "@hooks/useSyncFirestoreDB";
 import { useDispatch } from "react-redux";
 import { syncWithBackend } from "@redux/slices/goalSlice";
 import Loader from "@components/loader/Loader";
@@ -26,6 +26,7 @@ import {
   where,
 } from "firebase/firestore";
 import log from "@utils/log";
+import Head from "next/head";
 
 export function Goals({ goalsFromDB }: any) {
   log("Goals page rendered");
@@ -49,23 +50,29 @@ export function Goals({ goalsFromDB }: any) {
   });
 
   return (
-    <div className="lg:ml-[200px] lg:mr-[200px]">
-      {user.email && (
-        <div className="flex items-baseline justify-end mb-6">
-          <SignedInInfo email={user.email} />
-          <SignOutButton />
-        </div>
-      )}
-      <h1 className="text-2xl underline font-bold mb-8">Goals:</h1>
-      <NewGoalButton />
-      {content}
-    </div>
+    <>
+      <Head>
+        <title>Goals page</title>
+      </Head>
+      <div className="lg:ml-[200px] lg:mr-[200px]">
+        {user.email && (
+          <div className="flex items-baseline justify-end mb-6">
+            <SignedInInfo email={user.email} />
+            <SignOutButton />
+          </div>
+        )}
+        <h1 className="text-2xl underline font-bold mb-8">Goals:</h1>
+        <NewGoalButton />
+        {content}
+      </div>
+    </>
   );
 }
 
 export default withAuthUser({
   whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
   whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
+  whenAuthed: AuthAction.RENDER,
   LoaderComponent: Loader,
 })(Goals);
 
@@ -95,11 +102,13 @@ export const getServerSideProps = withAuthUserTokenSSR({
       orderBy("timestamp")
     );
 
-    const querySnap = await getDocs(myGoalsRef);
-
-    querySnap.forEach((doc: any) => {
+    (await getDocs(myGoalsRef)).forEach((doc: any) => {
       goalsFromDB.push(mapGoal(doc.data() as GoalType));
     });
+
+    // case 1: regged user lands with no goals, new reg -> create dummy goal
+    // case 2: regged user lands with no goals, no new reg -> don't do anything
+    // casw 3: regged user lands with already goals -> don't do anything
   } catch (error) {
     if (error instanceof Error) log(error.message);
   }
