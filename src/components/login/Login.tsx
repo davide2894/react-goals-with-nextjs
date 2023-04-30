@@ -29,7 +29,7 @@ function Login() {
       <form onSubmit={handleSubmit}>
         <div className="mb-2">
           <label
-            className="text-gray-700 text-sm font-bold mb-2"
+            className="text-gray-700 font-bold mb-2"
             htmlFor="loginFormEmailInput">
             Email
           </label>
@@ -45,7 +45,7 @@ function Login() {
         </div>
         <div className="mb-4">
           <label
-            className="text-gray-700 text-sm font-bold mb-2"
+            className="text-gray-700 font-bold mb-2"
             htmlFor="loginFormPassword">
             Password
           </label>

@@ -24,7 +24,7 @@ function Register() {
       <form onSubmit={handleSubmit}>
         <div className="mb-2">
           <label
-            className="text-gray-700 text-sm font-bold mb-2"
+            className="text-gray-700 font-bold mb-2"
             htmlFor="registrationFormNameInput">
             Name
           </label>
@@ -41,7 +41,7 @@ function Register() {
         </div>
         <div className="mb-2">
           <label
-            className="text-gray-700 text-sm font-bold mb-2"
+            className="text-gray-700 font-bold mb-2"
             htmlFor="registrationFormEmailInput">
             Email
           </label>
@@ -58,7 +58,7 @@ function Register() {
         </div>
         <div className="mb-4">
           <label
-            className="text-gray-700 text-sm font-bold mb-2"
+            className="text-gray-700 font-bold mb-2"
             htmlFor="registrationFormPasswordInput">
             Password
           </label>
