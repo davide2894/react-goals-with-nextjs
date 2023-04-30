@@ -1,12 +1,12 @@
 import Goal from "@components/goal/Goal";
 import { GoalType } from "@types";
 import NewGoalButton from "@components/newGoalButton/NewGoalButton";
-import { useAppSelector } from "@redux/store";
+import { useAppSelector } from "@store";
 import { useEffect } from "react";
 import { useDebounce } from "use-debounce";
 import useSyncFirestoreDb from "@hooks/useSyncFirestoreDB";
 import { useDispatch } from "react-redux";
-import { syncWithBackend } from "@redux/slices/goalSlice";
+import { syncWithBackend } from "@goalSlice/goalSlice";
 import Loader from "@components/loader/Loader";
 import SignOutButton from "@components/signOutButton/SignOut";
 import SignedInInfo from "@components/signedInInfo/SignedInInfo";

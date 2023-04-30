@@ -8,7 +8,7 @@ import {
   resetGoal,
   incrementScore,
   updateGoalTitle,
-} from "@redux/slices/goalSlice";
+} from "@goalSlice/goalSlice";
 import ButtonIcon from "@components/buttonIcon/ButtonIcon";
 
 function Goal({ goal }: any) {
@@ -47,7 +47,7 @@ function Goal({ goal }: any) {
   useEffect(() => {
     dispatch(updateGoalTitle({ goal, editableTitleValue }));
     return () => {};
-  }, [editableTitleValue]);
+  }, [editableTitleValue, dispatch, goal]);
 
   return (
     <div data-testid="goalTest" className={goalCsslasses}>

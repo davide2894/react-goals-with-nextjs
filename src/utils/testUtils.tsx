@@ -2,11 +2,10 @@ import React, { PropsWithChildren } from "react";
 import { render } from "@testing-library/react";
 import type { RenderOptions } from "@testing-library/react";
 import { Store, configureStore } from "@reduxjs/toolkit";
-import goalFormReducer from "@redux/slices/goalFormSlice";
+import goalFormReducer from "@goalFormSlice/goalFormSlice";
 import type { PreloadedState } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import { RootState } from "@redux/store";
-import { GoalFormData } from "@types";
+import { RootState } from "@store";
 
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.

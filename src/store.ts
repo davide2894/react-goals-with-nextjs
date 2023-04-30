@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import goalReducer from "./slices/goalSlice";
-import goalFormReducer from "./slices/goalFormSlice";
+import goalReducer from "@goalSlice/goalSlice";
+import goalFormReducer from "@goalFormSlice/goalFormSlice";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 export const store = configureStore({
