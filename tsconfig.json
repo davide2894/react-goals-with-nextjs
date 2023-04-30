@@ -18,9 +18,11 @@
       "@components*": ["./src/components*"],
       "@styles*": ["./src/styles/*"],
       "@pages*": ["./src/pages*"],
-      "@redux*": ["./src/redux*"],
+      "@goalSlice*": ["./src/features/goal/*"],
+      "@goalFormSlice*": ["./src/features/goalForm/*"],
+      "@store": ["./src/store.ts"],
       "@firebase": ["./src/firebase.ts"],
-      "@types": ["./src/types"],
+      "@types": ["./src/types.ts"],
       "@utils*": ["./src/utils*"],
       "@hooks*": ["./src/hooks*"]
     },
