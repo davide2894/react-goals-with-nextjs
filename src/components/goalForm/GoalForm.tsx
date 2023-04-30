@@ -1,6 +1,6 @@
 import { SyntheticEvent, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addGoal, updateGoal } from "@redux/slices/goalSlice";
+import { addGoal, updateGoal } from "@goalSlice/goalSlice";
 import { v4 as uuidv4 } from "uuid";
 import { GoalType, FormProps } from "@types";
 import SubmitButton from "@components/submitButton/SubmitButton";
@@ -47,16 +47,14 @@ function GoalForm(props: FormProps) {
 
   const inputCssClasses =
     "shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline text-black";
-  const labelCssClasses = "block text-sm mb-2";
+  const labelCssClasses = "block mb-2";
 
   return (
     <form
       className="shadow-md rounded pt-6 pb-8 mb-4"
       onSubmit={(evt) => onFormSubmit(evt)}>
       <div className="mb-4">
-        <label
-          htmlFor="nameInput"
-          className="goalForm__nameLabel block text-sm mb-2">
+        <label htmlFor="nameInput" className="goalForm__nameLabel block mb-2">
           Goal title:
           <input
             className={inputCssClasses}
