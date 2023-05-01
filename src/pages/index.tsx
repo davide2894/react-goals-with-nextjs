@@ -6,7 +6,7 @@ function Home(props: { route: string; text: string }) {
   return (
     <>
       <Head>
-        <title>Goals page</title>
+        <title>Goal Tracker</title>
       </Head>
       <div className="home">
         <div className="flex justify-center mt-10">
