@@ -2,7 +2,7 @@ import { useState, SyntheticEvent, ChangeEvent } from "react";
 import { loginWithEmailAndPassword } from "@firebase";
 import SubmitButton from "@components/submitButton/SubmitButton";
 
-function Login() {
+function LoginWithEmail() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -67,4 +67,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginWithEmail;

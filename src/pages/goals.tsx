@@ -55,12 +55,10 @@ export function Goals({ goalsFromDB }: any) {
         <title>Goals page</title>
       </Head>
       <div className="lg:ml-[200px] lg:mr-[200px]">
-        {user.email && (
-          <div className="flex items-baseline justify-end mb-6">
-            <SignedInInfo email={user.email} />
-            <SignOutButton />
-          </div>
-        )}
+        <div className="flex items-baseline justify-end mb-6">
+          {user.email && <SignedInInfo email={user.email} />}
+          <SignOutButton />
+        </div>
         <h1 className="text-2xl underline font-bold mb-8">Goals:</h1>
         <NewGoalButton />
         {content}

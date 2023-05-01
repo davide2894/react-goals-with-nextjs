@@ -2,15 +2,18 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import {
+  getAuth,
   createUserWithEmailAndPassword,
+  signInAnonymously,
   signInWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
 import getUserDocId from "@utils/getUserDocId";
 import updateFirestoreDoc from "@utils/updateFireStoreDB";
 import { FirebaseFirestore } from "@firebase/firestore-types";
 import log from "@utils/log";
+import { FirebaseApp } from "@firebase/app-compat";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY
@@ -33,16 +36,17 @@ const firebaseConfig = {
     : "",
 };
 
+let app: firebase.app.App | FirebaseApp | undefined;
 let db: firebase.firestore.Firestore | FirebaseFirestore;
 let auth: any;
-let provider: firebase.auth.GoogleAuthProvider;
+let googleAuthProvider: firebase.auth.GoogleAuthProvider;
 
 const initFirebase = () => {
-  firebase.initializeApp(firebaseConfig);
+  app = firebase.initializeApp(firebaseConfig);
   initFirestoreDb();
   initFirebaseAuth();
   initFirebaseProvider();
-  provider.setCustomParameters({
+  googleAuthProvider.setCustomParameters({
     prompt: "select_account",
   });
 };
@@ -52,11 +56,11 @@ const initFirestoreDb = () => {
 };
 
 const initFirebaseAuth = () => {
-  auth = getAuth();
+  auth = getAuth(app);
 };
 
 const initFirebaseProvider = () => {
-  provider = new firebase.auth.GoogleAuthProvider();
+  googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 };
 
 const registerWithEmailAndPassword = async (
@@ -80,7 +84,6 @@ const registerWithEmailAndPassword = async (
       authProvider: "local",
       refreshToken: user.refreshToken,
     });
-
     if (userDocId) {
       log("firebase.ts --> calling updateFirestoreDoc");
       await updateFirestoreDoc(
@@ -106,6 +109,39 @@ const registerWithEmailAndPassword = async (
   }
 };
 
+const continueAsGuest = async (authInstance = auth) => {
+  try {
+    const result = await signInAnonymously(authInstance);
+    const user = result.user;
+
+    if (user) {
+      log({
+        msg: "user logged successfully with Google Auth Provider",
+        user,
+      });
+    }
+  } catch (err) {
+    log(err);
+    alert(
+      "There was an issue while trying to access as a guest. Please try again"
+    );
+  }
+};
+
+const loginWithGoogleProvider = async () => {
+  try {
+    const result = await signInWithPopup(auth, googleAuthProvider);
+    const user = result.user;
+
+    if (user) {
+      log({ msg: "user logged successfully with Google Auth Provider", user });
+    }
+  } catch (err) {
+    log(err);
+    alert("There is an issue with Google login. Please try again");
+  }
+};
+
 const loginWithEmailAndPassword = async (email: string, password: string) => {
   try {
     const res = await signInWithEmailAndPassword(auth, email, password);
@@ -120,10 +156,12 @@ const loginWithEmailAndPassword = async (email: string, password: string) => {
 
 export {
   firebase,
-  provider,
+  googleAuthProvider,
   db,
   auth,
   initFirebase,
   registerWithEmailAndPassword,
   loginWithEmailAndPassword,
+  loginWithGoogleProvider,
+  continueAsGuest,
 };

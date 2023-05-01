@@ -33,7 +33,7 @@ export const getServerSideProps = withAuthUserTokenSSR({})(
       text = "Go to Goals page";
     } else {
       route = "/signin";
-      text = "Sign in";
+      text = "Get started";
     }
 
     return {
