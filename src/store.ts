@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import goalReducer from "@goalSlice/goalSlice";
 import goalFormReducer from "@goalFormSlice/goalFormSlice";
+import guestAccessReducer from "@guestAccessSliceguestAccessSlice";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 export const store = configureStore({
   reducer: {
     goalFormReducer: goalFormReducer,
     goalReducer: goalReducer,
+    guestAccessReducer: guestAccessReducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware();

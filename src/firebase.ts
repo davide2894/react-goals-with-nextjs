@@ -14,6 +14,7 @@ import updateFirestoreDoc from "@utils/updateFireStoreDB";
 import { FirebaseFirestore } from "@firebase/firestore-types";
 import log from "@utils/log";
 import { FirebaseApp } from "@firebase/app-compat";
+import { v4 as uuidv4 } from "uuid";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY
@@ -116,9 +117,38 @@ const continueAsGuest = async (authInstance = auth) => {
 
     if (user) {
       log({
-        msg: "user logged successfully with Google Auth Provider",
+        msg: "user logged successfully as guest",
         user,
       });
+      const randomEmailForGuestUser = `reactdailygoaltrackerguestprofile${uuidv4()}@yopmail.com`;
+      const userDocId = getUserDocId(randomEmailForGuestUser, user.uid);
+      const userDocRef = doc(db, `users/${userDocId}`);
+
+      await setDoc(userDocRef, {
+        email: randomEmailForGuestUser,
+        uid: user.uid,
+        authProvider: "local",
+        refreshToken: user.refreshToken,
+      });
+
+      if (userDocId) {
+        log("firebase.ts --> calling updateFirestoreDoc");
+        await updateFirestoreDoc(
+          `guest-profile-${user.uid}`,
+          {
+            title: "this is an example goal. You should start adding yours! :)",
+            score: {
+              max: 5,
+              min: 0,
+              actual: 0,
+            },
+            id: "exampleId",
+            userIdRef: user.uid,
+            timestamp: Date.now(),
+          },
+          "add"
+        );
+      }
     }
   } catch (err) {
     log(err);

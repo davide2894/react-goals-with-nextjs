@@ -20,6 +20,7 @@
       "@pages*": ["./src/pages*"],
       "@goalSlice*": ["./src/features/goal/*"],
       "@goalFormSlice*": ["./src/features/goalForm/*"],
+      "@guestAccessSlice*": ["./src/features/guestAccess/*"],
       "@store": ["./src/store.ts"],
       "@firebase": ["./src/firebase.ts"],
       "@types": ["./src/types.ts"],
