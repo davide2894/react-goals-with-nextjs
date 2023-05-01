@@ -4,7 +4,7 @@ import Loader from "@components/loader/Loader";
 import { withAuthUser, AuthAction } from "next-firebase-auth";
 import SubmitButton from "@components/submitButton/SubmitButton";
 
-function RegistrationForm() {
+function RegisterWithEmail() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -86,4 +86,4 @@ export default withAuthUser({
   whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
   whenUnauthedAfterInit: AuthAction.RENDER,
   LoaderComponent: Loader,
-})(RegistrationForm);
+})(RegisterWithEmail);

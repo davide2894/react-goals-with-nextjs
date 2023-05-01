@@ -128,7 +128,7 @@ const continueAsGuest = async (authInstance = auth) => {
   }
 };
 
-const loginWithGoogleProvider = async () => {
+const signInWithGoogleProvider = async () => {
   try {
     const result = await signInWithPopup(auth, googleAuthProvider);
     const user = result.user;
@@ -162,6 +162,6 @@ export {
   initFirebase,
   registerWithEmailAndPassword,
   loginWithEmailAndPassword,
-  loginWithGoogleProvider,
+  signInWithGoogleProvider,
   continueAsGuest,
 };
