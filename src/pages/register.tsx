@@ -1,3 +1,4 @@
+import Loader from "@components/loader/Loader";
 import SignInWithGoogle from "@components/loginWithGoogle/SignInWithGoogle";
 import RegisterWithEmail from "@components/registerWithEmail/RegisterWithEmail";
 import { withAuthUser, AuthAction } from "next-firebase-auth";
@@ -12,6 +13,7 @@ function RegisterPage() {
       </Head>
       <div className="flex flex-col items-center lg:justify-center  mt-14">
         <RegisterWithEmail />
+        OR
         <SignInWithGoogle buttonText="Sign up with Google" />
         <Link
           className="mt-4 underline text-white font-bold py-2"
@@ -25,4 +27,6 @@ function RegisterPage() {
 
 export default withAuthUser({
   whenAuthed: AuthAction.REDIRECT_TO_APP,
+  whenAuthedBeforeRedirect: AuthAction.SHOW_LOADER,
+  LoaderComponent: Loader,
 })(RegisterPage);

@@ -1,24 +1,46 @@
-import { useAppSelector } from "@store";
-import log from "@utils/log";
+import React from "react";
 
-function SignedInInfo(props: { email: string }) {
-  const isGuestState = useAppSelector(
-    (state) => state.guestAccessReducer.isGuest
+function SignedInInfo(props: { isGuest?: boolean; email: string }) {
+  console.log({ props });
+
+  const dateObj = new Date();
+  const hrs = dateObj.getHours();
+  const mins = dateObj.getMinutes();
+  const seconds = dateObj.getSeconds();
+  const milliseconds = dateObj.getMilliseconds();
+  console.log(
+    `SignedInInfo was rendered at ${hrs}-${mins}-${seconds}-${milliseconds}`
   );
 
-  isGuestState
-    ? log("rendering SignedInInfo for guest profile")
-    : log("rendering SignedInInfo for logged profile");
-
   return (
-    <div className="mt-8 text-right">
-      {isGuestState && props.email ? (
+    <div className="text-right">
+      {props.email.includes("reactdailygoaltrackerguestprofile") ? (
         <p>Guest profile</p>
       ) : (
-        <p>Signed in as {props.email}</p>
+        <p>Singed in as {props.email}</p>
       )}
     </div>
   );
 }
 
-export default SignedInInfo;
+// eslint-disable-next-line no-unused-vars
+function customPropsAreEqual(
+  prevProps: { isGuest: boolean; email: string },
+  nextProps: { isGuest: boolean; email: string }
+) {
+  console.log(
+    "prevProps.isGuest === nextProps.isGuest",
+    prevProps.isGuest === nextProps.isGuest
+  );
+  console.log(
+    "prevProps.email === nextProps.email",
+    prevProps.email === nextProps.email
+  );
+
+  return (
+    prevProps.isGuest === nextProps.isGuest &&
+    prevProps.email === nextProps.email
+  );
+}
+
+export const MemoizedSignedInInfo = React.memo(SignedInInfo);

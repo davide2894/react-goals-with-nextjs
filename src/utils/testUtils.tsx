@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from "react";
 import { render } from "@testing-library/react";
 import type { RenderOptions } from "@testing-library/react";
 import { Store, configureStore } from "@reduxjs/toolkit";
-import goalFormReducer from "@goalFormSlice/goalFormSlice";
+import goalFormReducer from "@goalFormSlice";
 import type { PreloadedState } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { RootState } from "@store";
@@ -39,6 +39,9 @@ export function renderWithProviders(
             timestamp: Date.now(),
           },
         ],
+      },
+      userReducer: {
+        isGuest: false,
       },
     },
     // Automatically create a store instance if no store was passed in

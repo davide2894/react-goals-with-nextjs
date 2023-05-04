@@ -1,9 +1,9 @@
 import ButtonIcon from "@components/buttonIcon/ButtonIcon";
-import { loginWithGoogleProvider } from "@firebase";
+import { signInWithGoogleProvider } from "@firebase";
 
 function RegisterWithGoogle() {
   const handleRegisterWithGoogle = () => {
-    loginWithGoogleProvider();
+    signInWithGoogleProvider();
   };
 
   return (

@@ -1,10 +1,10 @@
 import React, { SyntheticEvent, useState } from "react";
 import { registerWithEmailAndPassword } from "@firebase";
-import Loader from "@components/loader/Loader";
-import { withAuthUser, AuthAction } from "next-firebase-auth";
+// import Loader from "@components/loader/Loader";
+// import { withAuthUser, AuthAction } from "next-firebase-auth";
 import SubmitButton from "@components/submitButton/SubmitButton";
 
-function RegisterWithEmail() {
+export default function RegisterWithEmail() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -81,9 +81,9 @@ function RegisterWithEmail() {
   );
 }
 
-export default withAuthUser({
-  whenAuthed: AuthAction.REDIRECT_TO_APP,
-  whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
-  whenUnauthedAfterInit: AuthAction.RENDER,
-  LoaderComponent: Loader,
-})(RegisterWithEmail);
+// export default withAuthUser({
+//   whenAuthed: AuthAction.REDIRECT_TO_APP,
+//   whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
+//   whenUnauthedAfterInit: AuthAction.RENDER,
+//   LoaderComponent: Loader,
+// })(RegisterWithEmail);
