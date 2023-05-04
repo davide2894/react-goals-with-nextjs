@@ -8,7 +8,7 @@ import {
   resetGoal,
   incrementScore,
   updateGoalTitle,
-} from "@goalSlice/goalSlice";
+} from "@goalSlice";
 import ButtonIcon from "@components/buttonIcon/ButtonIcon";
 
 function Goal({ goal }: any) {
