@@ -7,10 +7,11 @@ import {
   signInAnonymously,
   signInWithEmailAndPassword,
   signInWithPopup,
+  getAdditionalUserInfo,
+  User,
 } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 import getUserDocId from "@utils/getUserDocId";
-import updateFirestoreDoc from "@utils/updateFireStoreDB";
 import { FirebaseFirestore } from "@firebase/firestore-types";
 import log from "@utils/log";
 import { FirebaseApp } from "@firebase/app-compat";
@@ -75,6 +76,14 @@ const registerWithEmailAndPassword = async (
       email,
       password
     );
+
+    setTimeout(() => {
+      console.log("timeout");
+    }, 10000);
+
+    const details = getAdditionalUserInfo(registrationResult);
+    log("details -> ", details);
+
     const user = registrationResult.user;
     const userDocId = getUserDocId(user.email, user.uid);
     const userDocRef = doc(db, `users/${userDocId}`);
@@ -85,23 +94,10 @@ const registerWithEmailAndPassword = async (
       authProvider: "local",
       refreshToken: user.refreshToken,
     });
-    if (userDocId) {
-      log("firebase.ts --> calling updateFirestoreDoc");
-      await updateFirestoreDoc(
-        userDocId,
-        {
-          title: "this is an example goal. You should start adding yours! :)",
-          score: {
-            max: 5,
-            min: 0,
-            actual: 0,
-          },
-          id: "exampleId",
-          userIdRef: user.uid,
-          timestamp: Date.now(),
-        },
-        "add"
-      );
+    if (details?.isNewUser) {
+      await createExampleGoal(user);
+    } else {
+      log("Firebase.ts file -> user already registered");
     }
   } catch (err) {
     alert(
@@ -114,6 +110,9 @@ const continueAsGuest = async (authInstance = auth) => {
   try {
     const result = await signInAnonymously(authInstance);
     const user = result.user;
+
+    const details = getAdditionalUserInfo(result);
+    log("details -> ", details);
 
     if (user) {
       log({
@@ -131,23 +130,11 @@ const continueAsGuest = async (authInstance = auth) => {
         refreshToken: user.refreshToken,
       });
 
-      if (userDocId) {
-        log("firebase.ts --> calling updateFirestoreDoc");
-        await updateFirestoreDoc(
-          `guest-profile-${user.uid}`,
-          {
-            title: "this is an example goal. You should start adding yours! :)",
-            score: {
-              max: 5,
-              min: 0,
-              actual: 0,
-            },
-            id: "exampleId",
-            userIdRef: user.uid,
-            timestamp: Date.now(),
-          },
-          "add"
-        );
+      if (details?.isNewUser) {
+        log("Firebase.ts file -> creating example goal for new user");
+        await createExampleGoal(user);
+      } else {
+        log("Firebase.ts file -> user already registered");
       }
     }
   } catch (err) {
@@ -163,6 +150,9 @@ const signInWithGoogleProvider = async () => {
     const result = await signInWithPopup(auth, googleAuthProvider);
     const user = result.user;
 
+    const details = getAdditionalUserInfo(result);
+    log("details -> ", details);
+
     if (user) {
       log({ msg: "user logged successfully with Google Auth Provider", user });
     }
@@ -176,12 +166,41 @@ const loginWithEmailAndPassword = async (email: string, password: string) => {
   try {
     const res = await signInWithEmailAndPassword(auth, email, password);
     const user = res.user;
+
+    log("details -> UserCredential object -> ", res);
+    const details = getAdditionalUserInfo(res);
+    log("details -> ", details);
+
     if (user) {
       log({ msg: "user logged successfully", user });
     }
   } catch (err) {
     alert("There is an issue with your credentials. Please try again");
   }
+};
+
+const createExampleGoal = async (user: User) => {
+  const exampleGoal = {
+    title:
+      "Firebase.ts file -> this is an example goal. You should start adding yours! :)",
+    score: {
+      max: 5,
+      min: 0,
+      actual: 0,
+    },
+    id: "exampleId",
+    userIdRef: user.uid,
+    timestamp: Date.now(),
+  };
+
+  const exampleDocRef = doc(
+    db,
+    `/users/${getUserDocId(user.email, user.uid)}/user-goals/${exampleGoal.id}`
+  );
+  log("Firebase.ts file -> creating example goal for new user");
+  await setDoc(exampleDocRef, exampleGoal, { merge: true });
+  log("Firebase.ts file -> created example goal for new user");
+  log({ newUserGoal: exampleGoal });
 };
 
 export {

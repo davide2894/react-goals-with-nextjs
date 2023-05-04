@@ -3,12 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isGuest:
     typeof window !== "undefined"
-      ? localStorage.getItem("isGuestSession")
-      : false,
+      ? JSON.parse(localStorage.getItem("isGuest") || "false")
+      : undefined,
 };
 
-export const guestAccessSlice = createSlice({
-  name: "guestAccessSlice",
+export const userSlice = createSlice({
+  name: "userSlice",
   initialState,
   reducers: {
     isGuest: (state, action) => {
@@ -17,5 +17,5 @@ export const guestAccessSlice = createSlice({
   },
 });
 
-export const { isGuest } = guestAccessSlice.actions;
-export default guestAccessSlice.reducer;
+export const { isGuest } = userSlice.actions;
+export default userSlice.reducer;

@@ -1,17 +1,31 @@
 import { configureStore } from "@reduxjs/toolkit";
-import goalReducer from "@goalSlice/goalSlice";
-import goalFormReducer from "@goalFormSlice/goalFormSlice";
-import guestAccessReducer from "@guestAccessSliceguestAccessSlice";
+import goalReducer from "@goalSlice";
+import goalFormReducer from "@goalFormSlice";
+import userReducer from "@userSlice";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
+import log from "@utils/log";
+
+const logger = (store: any) => (next: any) => (action: any) => {
+  log("middleware --> dispatching", action);
+
+  if (action.type === "userSlice/isGuest") {
+    log("middleware -> setting isGuestSesson key insto local storage");
+    localStorage.setItem("isGuest", action.payload.toString());
+  }
+
+  let result = next(action);
+  log("middleware --> next state", store.getState());
+  return result;
+};
 
 export const store = configureStore({
   reducer: {
     goalFormReducer: goalFormReducer,
     goalReducer: goalReducer,
-    guestAccessReducer: guestAccessReducer,
+    userReducer: userReducer,
   },
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware();
+    return getDefaultMiddleware().concat(logger);
   },
 });
 
