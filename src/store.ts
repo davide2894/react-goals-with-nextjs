@@ -3,20 +3,6 @@ import goalReducer from "@goalSlice";
 import goalFormReducer from "@goalFormSlice";
 import formReducer from "@formSlice";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
-import log from "@utils/log";
-
-const logger = (store: any) => (next: any) => (action: any) => {
-  log("middleware --> dispatching", action);
-
-  if (action.type === "userSlice/isGuest") {
-    log("middleware -> setting isGuestSesson key insto local storage");
-    localStorage.setItem("isGuest", action.payload.toString());
-  }
-
-  let result = next(action);
-  log("middleware --> next state", store.getState());
-  return result;
-};
 
 export const store = configureStore({
   reducer: {
@@ -25,7 +11,7 @@ export const store = configureStore({
     formReducer: formReducer,
   },
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(logger);
+    return getDefaultMiddleware();
   },
 });
 
