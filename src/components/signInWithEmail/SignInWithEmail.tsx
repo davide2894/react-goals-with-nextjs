@@ -2,7 +2,6 @@ import { useState, SyntheticEvent, ChangeEvent } from "react";
 import { submitWithEmailAndPassword } from "@firebase";
 import SubmitButton from "@components/submitButton/SubmitButton";
 import { useDispatch } from "react-redux";
-import { isGuest } from "@userSlice";
 import { isSubmitting } from "@formSlice";
 
 function SignInWithEmail() {
@@ -14,7 +13,6 @@ function SignInWithEmail() {
     evt.preventDefault();
     dispatch(isSubmitting(true));
     await submitWithEmailAndPassword(email, password);
-    dispatch(isGuest(false));
   }
 
   function handleEmailChange(evt: ChangeEvent<HTMLInputElement>) {
