@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import goalReducer from "@goalSlice";
 import goalFormReducer from "@goalFormSlice";
+import formReducer from "@formSlice";
 import userReducer from "@userSlice";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 import log from "@utils/log";
@@ -23,6 +24,7 @@ export const store = configureStore({
     goalFormReducer: goalFormReducer,
     goalReducer: goalReducer,
     userReducer: userReducer,
+    formReducer: formReducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware().concat(logger);

@@ -1,18 +1,23 @@
 import ButtonIcon from "@components/buttonIcon/ButtonIcon";
 import { registerWithEmailAndPassword } from "@firebase";
+import { isSubmitting } from "@formSlice";
 import log from "@utils/log";
+import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 
 function GuestAccessButton() {
-  const handleGuestAccess = () => {
+  const dispatch = useDispatch();
+
+  async function handleGuestAccess() {
     log("guest user registration -> registering guest user");
-    registerWithEmailAndPassword(
+    dispatch(isSubmitting(true));
+    await registerWithEmailAndPassword(
       "guest",
       `reactdailygoaltrackerguestprofile${uuidv4()}11${uuidv4()}@yopmail.com`,
       `guestAccessPassword123${uuidv4()}`
     );
     log("guest user registration -> finished guest user registration");
-  };
+  }
 
   return (
     <button

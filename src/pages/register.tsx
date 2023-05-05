@@ -4,14 +4,26 @@ import RegisterWithEmail from "@components/registerWithEmail/RegisterWithEmail";
 import { withAuthUser, AuthAction } from "next-firebase-auth";
 import Head from "next/head";
 import Link from "next/link";
+import { useAppSelector } from "@store";
 
 function RegisterPage() {
+  const isSubmitting = useAppSelector(
+    (state) => state.formReducer.isSubmitting
+  );
+
+  let containerClassNames =
+    "flex flex-col items-center lg:justify-center mt-14";
+
+  if (isSubmitting) {
+    containerClassNames += " pointer-events-none opacity-50";
+  }
+
   return (
     <>
       <Head>
         <title>Regiter</title>
       </Head>
-      <div className="flex flex-col items-center lg:justify-center  mt-14">
+      <div className={containerClassNames}>
         <RegisterWithEmail />
         OR
         <SignInWithGoogle buttonText="Sign up with Google" />

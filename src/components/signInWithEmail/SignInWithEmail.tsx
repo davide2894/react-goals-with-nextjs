@@ -1,17 +1,19 @@
 import { useState, SyntheticEvent, ChangeEvent } from "react";
-import { loginWithEmailAndPassword } from "@firebase";
+import { submitWithEmailAndPassword } from "@firebase";
 import SubmitButton from "@components/submitButton/SubmitButton";
 import { useDispatch } from "react-redux";
 import { isGuest } from "@userSlice";
+import { isSubmitting } from "@formSlice";
 
 function SignInWithEmail() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
-  function handleSubmit(evt: SyntheticEvent) {
+  async function handleSubmit(evt: SyntheticEvent) {
     evt.preventDefault();
-    loginWithEmailAndPassword(email, password);
+    dispatch(isSubmitting(true));
+    await submitWithEmailAndPassword(email, password);
     dispatch(isGuest(false));
   }
 

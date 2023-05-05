@@ -1,14 +1,14 @@
 import ButtonIcon from "@components/buttonIcon/ButtonIcon";
 import { signInWithGoogleProvider } from "@firebase";
-import { isGuest } from "@userSlice";
+import { isSubmitting } from "@formSlice";
 import { useDispatch } from "react-redux";
 
 function SignInWithGoogle(props: { buttonText: string }) {
   const dispatch = useDispatch();
 
   const handleSignInWithGoogle = () => {
+    dispatch(isSubmitting(true));
     signInWithGoogleProvider();
-    dispatch(isGuest(false));
   };
 
   return (

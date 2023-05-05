@@ -1,17 +1,22 @@
 import React, { SyntheticEvent, useState } from "react";
 import { registerWithEmailAndPassword } from "@firebase";
-// import Loader from "@components/loader/Loader";
-// import { withAuthUser, AuthAction } from "next-firebase-auth";
 import SubmitButton from "@components/submitButton/SubmitButton";
+import { isSubmitting } from "@formSlice";
+import { useDispatch } from "react-redux";
+import log from "@utils/log";
 
 export default function RegisterWithEmail() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
-  function handleSubmit(evt: SyntheticEvent) {
+  async function handleSubmit(evt: SyntheticEvent) {
     evt.preventDefault();
-    registerWithEmailAndPassword(name, email, password);
+    dispatch(isSubmitting(true));
+    log("isSubmitting");
+    await registerWithEmailAndPassword(name, email, password);
+    log("finished submitting");
   }
 
   return (

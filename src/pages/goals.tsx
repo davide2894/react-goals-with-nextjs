@@ -6,44 +6,72 @@ import { useEffect } from "react";
 import { useDebounce } from "use-debounce";
 import useSyncFirestoreDb from "@hooks/useSyncFirestoreDB";
 import { useDispatch } from "react-redux";
-import { syncWithBackend } from "@goalSlice/goalSlice";
+import { resetGoals, syncWithBackend } from "@goalSlice";
 import Loader from "@components/loader/Loader";
-import SignOutButton from "@components/signOutButton/SignOut";
-import SignedInInfo from "@components/signedInInfo/SignedInInfo";
+import SignOutButton from "@components/signOutButton/SignOutButton";
 import {
   AuthAction,
   useAuthUser,
+  verifyIdToken,
   withAuthUser,
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
 import getUserDocId from "@utils/getUserDocId";
-import { db } from "@firebase";
+import { auth, db } from "@firebase";
 import {
+  collection,
   collectionGroup,
+  doc,
+  getDoc,
   getDocs,
   orderBy,
   query,
   where,
 } from "firebase/firestore";
+import firebase from "@firebase";
 import log from "@utils/log";
 import Head from "next/head";
+import { MemoizedSignedInInfo } from "../components/signedInInfo/SignedInInfo";
+import { isSubmitting } from "@formSlice";
 
 export function Goals({ goalsFromDB }: any) {
   log("Goals page rendered");
-  log("env: " + process.env.NODE_ENV);
-  log(goalsFromDB);
+  log({ goalsFromDB });
 
   const user = useAuthUser();
   const goals = useAppSelector((state) => state.goalReducer.goals);
   const dispatch = useDispatch();
+
   const debouncedGoals = useDebounce(goals, 200, { trailing: true });
   useSyncFirestoreDb(debouncedGoals[0], getUserDocId(user.email, user.id));
 
   useEffect(() => {
     log("Goals -> useEffect to sync backend to local state");
-
+    dispatch(resetGoals());
     dispatch(syncWithBackend(goalsFromDB));
   }, [dispatch, goalsFromDB]);
+
+  useEffect(() => {
+    dispatch(isSubmitting(false));
+  }, [dispatch]);
+
+  // useEffect(() => {
+  //   let n;
+  //   if (!window.Notification) {
+  //     log("Browser does not support notifications.");
+  //   } else {
+  //     log("Browser supports notifications");
+  //     Notification.requestPermission()
+  //       .then(function (p) {
+  //         if (p === "granted") {
+  //           n = new Notification("test");
+  //         }
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+
+  //   return () => (n = undefined);
+  // }, []);
 
   const content = goals.map((goal: GoalType) => {
     return <Goal key={goal.id} goal={goal} />;
@@ -54,9 +82,9 @@ export function Goals({ goalsFromDB }: any) {
       <Head>
         <title>Goals page</title>
       </Head>
-      <div className="lg:ml-[200px] lg:mr-[200px]">
-        <div className="flex items-baseline justify-end mb-6">
-          {user.email && <SignedInInfo email={user.email} />}
+      <div className="ml-auto mr-auto sm:max-w-[600px] md:max-w-[800px] lg:max-w-[960px] ">
+        <div className="flex items-baseline justify-end mt-8 mb-6 h-24">
+          {user.email && <MemoizedSignedInInfo email={user.email} />}
           <SignOutButton />
         </div>
         <h1 className="text-2xl underline font-bold mb-8">Goals:</h1>
@@ -70,6 +98,7 @@ export function Goals({ goalsFromDB }: any) {
 export default withAuthUser({
   whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
   whenUnauthedBeforeInit: AuthAction.SHOW_LOADER,
+  whenAuthedBeforeRedirect: AuthAction.SHOW_LOADER,
   whenAuthed: AuthAction.RENDER,
   LoaderComponent: Loader,
 })(Goals);
@@ -93,6 +122,44 @@ export const getServerSideProps = withAuthUserTokenSSR({
   try {
     log("goals page - ssr pre-render --> AuthUser");
     log({ AuthUser });
+    log({
+      AuthUserFbUCreationTime: AuthUser.firebaseUser?.metadata.creationTime,
+    });
+    log({
+      AuthUserFbUserLastSignInTime:
+        AuthUser.firebaseUser?.metadata.lastSignInTime,
+    });
+
+    // const details = getAdditionalUserInfo()
+    // console.log("details -> ", details);
+
+    // check if is new user
+    // if user first login
+    //     -> create example goal
+    // else
+    //     -> don't do it, just go on with the rest of the page logic
+
+    // if(isNewUser){createExampleGoal; postExampleGoalIntoFireStoreDB}
+    // const exampleGoal = {
+    //   title:
+    //     "Goals page -> this is an example goal. You should start adding yours! :)",
+    //   score: {
+    //     max: 5,
+    //     min: 0,
+    //     actual: 0,
+    //   },
+    //   id: "exampleId",
+    //   userIdRef: AuthUser.id,
+    //   timestamp: Date.now(),
+    // };
+
+    // const exampleDocRef = doc(
+    //   db,
+    //   `/users/${getUserDocId(AuthUser.email, AuthUser.id)}/user-goals/${
+    //     exampleGoal.id
+    //   }`
+    // );
+    // await setDoc(exampleDocRef, exampleGoal, { merge: true });
 
     const myGoalsRef = query(
       collectionGroup(db, "user-goals"),

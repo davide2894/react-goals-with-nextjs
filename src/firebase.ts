@@ -77,10 +77,6 @@ const registerWithEmailAndPassword = async (
       password
     );
 
-    setTimeout(() => {
-      console.log("timeout");
-    }, 10000);
-
     const details = getAdditionalUserInfo(registrationResult);
     log("details -> ", details);
 
@@ -162,7 +158,7 @@ const signInWithGoogleProvider = async () => {
   }
 };
 
-const loginWithEmailAndPassword = async (email: string, password: string) => {
+const submitWithEmailAndPassword = async (email: string, password: string) => {
   try {
     const res = await signInWithEmailAndPassword(auth, email, password);
     const user = res.user;
@@ -210,7 +206,7 @@ export {
   auth,
   initFirebase,
   registerWithEmailAndPassword,
-  loginWithEmailAndPassword,
+  submitWithEmailAndPassword,
   signInWithGoogleProvider,
   continueAsGuest,
 };
