@@ -20,7 +20,6 @@
       "@pages*": ["./src/pages*"],
       "@goalSlice": ["./src/features/goal/goalSlice.ts"],
       "@goalFormSlice": ["./src/features/goalForm/goalFormSlice.ts"],
-      "@userSlice": ["./src/features/user/userSlice.ts"],
       "@formSlice": ["./src/features/form/formSlice.ts"],
       "@store": ["./src/store.ts"],
       "@firebase": ["./src/firebase.ts"],
