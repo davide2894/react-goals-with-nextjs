@@ -30,6 +30,7 @@ function RegisterPage() {
 
 export default withAuthUser({
   whenAuthed: AuthAction.REDIRECT_TO_APP,
+  whenUnauthedBeforeInit: AuthAction.RENDER,
   whenAuthedBeforeRedirect: AuthAction.SHOW_LOADER,
   LoaderComponent: Loader,
 })(RegisterPage);
