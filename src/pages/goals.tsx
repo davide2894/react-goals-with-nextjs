@@ -45,24 +45,6 @@ export function Goals({ goalsFromDB }: any) {
     dispatch(isSubmitting(false));
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   let n;
-  //   if (!window.Notification) {
-  //     log("Browser does not support notifications.");
-  //   } else {
-  //     log("Browser supports notifications");
-  //     Notification.requestPermission()
-  //       .then(function (p) {
-  //         if (p === "granted") {
-  //           n = new Notification("test");
-  //         }
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-
-  //   return () => (n = undefined);
-  // }, []);
-
   const content = goals.map((goal: GoalType) => {
     return <Goal key={goal.id} goal={goal} />;
   });
