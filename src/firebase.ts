@@ -4,7 +4,6 @@ import "firebase/compat/firestore";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  signInAnonymously,
   signInWithEmailAndPassword,
   signInWithPopup,
   getAdditionalUserInfo,
@@ -15,7 +14,6 @@ import getUserDocId from "@utils/getUserDocId";
 import { FirebaseFirestore } from "@firebase/firestore-types";
 import log from "@utils/log";
 import { FirebaseApp } from "@firebase/app-compat";
-import { v4 as uuidv4 } from "uuid";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY
@@ -102,45 +100,6 @@ const registerWithEmailAndPassword = async (
   }
 };
 
-const continueAsGuest = async (authInstance = auth) => {
-  try {
-    const result = await signInAnonymously(authInstance);
-    const user = result.user;
-
-    const details = getAdditionalUserInfo(result);
-    log("details -> ", details);
-
-    if (user) {
-      log({
-        msg: "user logged successfully as guest",
-        user,
-      });
-      const randomEmailForGuestUser = `reactdailygoaltrackerguestprofile${uuidv4()}@yopmail.com`;
-      const userDocId = getUserDocId(randomEmailForGuestUser, user.uid);
-      const userDocRef = doc(db, `users/${userDocId}`);
-
-      await setDoc(userDocRef, {
-        email: randomEmailForGuestUser,
-        uid: user.uid,
-        authProvider: "local",
-        refreshToken: user.refreshToken,
-      });
-
-      if (details?.isNewUser) {
-        log("Firebase.ts file -> creating example goal for new user");
-        await createExampleGoal(user);
-      } else {
-        log("Firebase.ts file -> user already registered");
-      }
-    }
-  } catch (err) {
-    log(err);
-    alert(
-      "There was an issue while trying to access as a guest. Please try again"
-    );
-  }
-};
-
 const signInWithGoogleProvider = async () => {
   try {
     const result = await signInWithPopup(auth, googleAuthProvider);
@@ -158,7 +117,7 @@ const signInWithGoogleProvider = async () => {
   }
 };
 
-const submitWithEmailAndPassword = async (email: string, password: string) => {
+const signInWithEmailAndPswd = async (email: string, password: string) => {
   try {
     const res = await signInWithEmailAndPassword(auth, email, password);
     const user = res.user;
@@ -205,8 +164,8 @@ export {
   db,
   auth,
   initFirebase,
-  registerWithEmailAndPassword,
-  submitWithEmailAndPassword,
+  signInWithEmailAndPswd,
+  signInWithEmailAndPassword,
   signInWithGoogleProvider,
-  continueAsGuest,
+  registerWithEmailAndPassword,
 };
