@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { GoalType, FormProps } from "@types";
 import SubmitButton from "@components/submitButton/SubmitButton";
 import { useAuthUser } from "next-firebase-auth";
+import { toast } from "react-toastify";
 
 function GoalForm(props: FormProps) {
   const [goalTitle, setGoalTitle] = useState(
@@ -35,6 +36,7 @@ function GoalForm(props: FormProps) {
     if (props.mode) {
       if (props.mode === "add") {
         dispatch(addGoal(goal));
+        toast.success("Goal added successfully!");
       } else if (props.mode === "edit") {
         dispatch(updateGoal(goal));
       }

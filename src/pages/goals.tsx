@@ -21,6 +21,8 @@ import Head from "next/head";
 import { MemoizedSignedInInfo } from "../components/signedInInfo/SignedInInfo";
 import { isSubmitting } from "@formSlice";
 import getUserGoalsFromDB from "@utils/getUserGoalsFromDB";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export function Goals({ goalsFromDB }: any) {
   log("Goals page rendered");
@@ -70,7 +72,15 @@ export function Goals({ goalsFromDB }: any) {
       <Head>
         <title>Goals page</title>
       </Head>
-      <div className="ml-auto mr-auto sm:max-w-[600px] md:max-w-[800px] lg:max-w-[960px] ">
+      <div className="ml-auto mr-auto sm:max-w-[600px] md:max-w-[800px] lg:max-w-[960px]">
+        <ToastContainer
+          draggable={false}
+          closeOnClick
+          pauseOnHover
+          autoClose={false}
+          position="bottom-left"
+          className="toast-position"
+        />
         <div className="flex items-baseline justify-end mt-8 mb-6 h-24">
           {user.email && <MemoizedSignedInInfo email={user.email} />}
           <SignOutButton />
