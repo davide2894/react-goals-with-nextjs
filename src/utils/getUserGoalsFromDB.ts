@@ -9,7 +9,7 @@ import {
 } from "firebase/firestore";
 import { AuthUser } from "next-firebase-auth";
 import log from "./log";
-import mapFirestoreGoalObject from "./mapGoal";
+import mapFirestoreGoalObject from "./mapFirestoreGoalObject";
 
 export default async function getUserGoalsFromDB(authUser: AuthUser) {
   let goalsFromDB: Array<GoalType> = [];
