@@ -12,27 +12,15 @@ import SignOutButton from "@components/signOutButton/SignOutButton";
 import {
   AuthAction,
   useAuthUser,
-  verifyIdToken,
   withAuthUser,
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
 import getUserDocId from "@utils/getUserDocId";
-import { auth, db } from "@firebase";
-import {
-  collection,
-  collectionGroup,
-  doc,
-  getDoc,
-  getDocs,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
-import firebase from "@firebase";
 import log from "@utils/log";
 import Head from "next/head";
 import { MemoizedSignedInInfo } from "../components/signedInInfo/SignedInInfo";
 import { isSubmitting } from "@formSlice";
+import getUserGoalsFromDB from "@utils/getUserGoalsFromDB";
 
 export function Goals({ goalsFromDB }: any) {
   log("Goals page rendered");
@@ -106,77 +94,7 @@ export default withAuthUser({
 export const getServerSideProps = withAuthUserTokenSSR({
   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
 })(async ({ AuthUser }) => {
-  log("goals page - ssr pre-render");
-  const mapGoal = (goalObjectFromFirestore: GoalType) => {
-    return {
-      title: goalObjectFromFirestore.title,
-      score: goalObjectFromFirestore.score,
-      id: goalObjectFromFirestore.id,
-      userIdRef: goalObjectFromFirestore.userIdRef,
-      timestamp: goalObjectFromFirestore.timestamp,
-    };
-  };
-
-  let goalsFromDB: Array<GoalType> = [];
-
-  try {
-    log("goals page - ssr pre-render --> AuthUser");
-    log({ AuthUser });
-    log({
-      AuthUserFbUCreationTime: AuthUser.firebaseUser?.metadata.creationTime,
-    });
-    log({
-      AuthUserFbUserLastSignInTime:
-        AuthUser.firebaseUser?.metadata.lastSignInTime,
-    });
-
-    // const details = getAdditionalUserInfo()
-    // console.log("details -> ", details);
-
-    // check if is new user
-    // if user first login
-    //     -> create example goal
-    // else
-    //     -> don't do it, just go on with the rest of the page logic
-
-    // if(isNewUser){createExampleGoal; postExampleGoalIntoFireStoreDB}
-    // const exampleGoal = {
-    //   title:
-    //     "Goals page -> this is an example goal. You should start adding yours! :)",
-    //   score: {
-    //     max: 5,
-    //     min: 0,
-    //     actual: 0,
-    //   },
-    //   id: "exampleId",
-    //   userIdRef: AuthUser.id,
-    //   timestamp: Date.now(),
-    // };
-
-    // const exampleDocRef = doc(
-    //   db,
-    //   `/users/${getUserDocId(AuthUser.email, AuthUser.id)}/user-goals/${
-    //     exampleGoal.id
-    //   }`
-    // );
-    // await setDoc(exampleDocRef, exampleGoal, { merge: true });
-
-    const myGoalsRef = query(
-      collectionGroup(db, "user-goals"),
-      where("userIdRef", "==", AuthUser.id),
-      orderBy("timestamp")
-    );
-
-    (await getDocs(myGoalsRef)).forEach((doc: any) => {
-      goalsFromDB.push(mapGoal(doc.data() as GoalType));
-    });
-
-    // case 1: regged user lands with no goals, new reg -> create dummy goal
-    // case 2: regged user lands with no goals, no new reg -> don't do anything
-    // casw 3: regged user lands with already goals -> don't do anything
-  } catch (error) {
-    if (error instanceof Error) log(error.message);
-  }
+  const goalsFromDB = await getUserGoalsFromDB(AuthUser);
 
   return {
     props: {
