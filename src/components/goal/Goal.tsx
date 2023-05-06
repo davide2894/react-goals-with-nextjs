@@ -10,6 +10,7 @@ import {
   updateGoalTitle,
 } from "@goalSlice";
 import ButtonIcon from "@components/buttonIcon/ButtonIcon";
+import trimString from "@utils/trimString";
 
 function Goal({ goal }: any) {
   const [showEditGoalForm, setShowEditGoalForm] = useState(false);
@@ -24,21 +25,8 @@ function Goal({ goal }: any) {
     setShowEditGoalForm(true);
   }
 
-  //credits: gist.github.com/nathansmith/86b5d4b23ed968a92fd4#file-2-converttotext-js
   function handleTitleChange(e: { target: { innerHTML: string } }) {
-    const trimmedEventValue = e.target.innerHTML
-      .trim()
-      .replace(/(?:^[\s\u00a0]+)/g, "")
-      .replace(/(?:[\s\u00a0]+$)/g, "")
-      .replace(/&nbsp;/gi, "")
-      .replace(/<br>/gi, "\n")
-      .replace(/<div>/gi, "\n")
-      .replace(/<(.*?)>/gi, "")
-      .split("\n")
-      .map((line) => {
-        return line.trim();
-      })
-      .join("\n");
+    const trimmedEventValue = trimString(e.target.innerHTML);
     if (trimmedEventValue && editableTitleValue !== trimmedEventValue) {
       setEditableTitleValue(trimmedEventValue);
     }
