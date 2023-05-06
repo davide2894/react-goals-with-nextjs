@@ -27,7 +27,7 @@ function Modal(props: { onClose: any; children?: ReactNode; mode?: string }) {
 
   return (
     <div
-      className="modalOverlay absolute top-0 bottom-0 left-0 right-0 bg-transparent backdrop-blur-md z-10"
+      className="modalOverlay absolute top-0 bottom-0 left-0 right-0 bg-transparent backdrop-blur-md z-10 flex flex-col items-center"
       onClick={(evt) => closeModalOnClickOutside(evt)}>
       <button
         className="absolute top-0 right-0 w-[55px] h-[55px]"
@@ -35,7 +35,7 @@ function Modal(props: { onClose: any; children?: ReactNode; mode?: string }) {
         <span className="block w-[25px] h-[25px] bg-no-repeat bg-center bg-contain bg-[url('../../public/close-button.svg')]"></span>
       </button>
       <div
-        className="p-5 m-14  bg-gray-700 rounded"
+        className="p-5 m-14  bg-gray-700 rounded max-w-[960px]"
         onClick={(evt) => {
           evt.stopPropagation();
         }}>
