@@ -5,26 +5,17 @@ import Link from "next/link";
 import SignInWithGoogle from "@components/loginWithGoogle/SignInWithGoogle";
 import GuestAccessButton from "@components/guestAccessButton/GuestAccessButton";
 import Loader from "@components/loader/Loader";
-import { useAppSelector } from "@store";
+import useFormClassNames from "@hooks/useFormClassNames";
 
 function Login() {
-  const isSubmitting = useAppSelector(
-    (state) => state.formReducer.isSubmitting
-  );
-
-  let containerClassNames =
-    "flex flex-col items-center lg:justify-center mt-14";
-
-  if (isSubmitting) {
-    containerClassNames += " pointer-events-none opacity-50";
-  }
+  const formClassNames = useFormClassNames();
 
   return (
     <>
       <Head>
         <title>Sign in</title>
       </Head>
-      <div className={containerClassNames}>
+      <div className={formClassNames}>
         <SignInWithEmail />
         OR
         <SignInWithGoogle buttonText="Sign in with Google" />
