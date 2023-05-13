@@ -1,5 +1,6 @@
-import SignupWithEmail from "../SignupWithEmail";
-import { render, screen, cleanup } from "@testing-library/react";
+import SignInWithEmail from "@components/signInWithEmail/SignInWithEmail";
+import { screen, cleanup } from "@testing-library/react";
+import { renderWithProviders } from "@utils/testUtils";
 import renderer from "react-test-renderer";
 
 afterEach(() => {
@@ -7,14 +8,14 @@ afterEach(() => {
 });
 
 test("Login component renders correctly", () => {
-  render(<SignupWithEmail />);
-  const loginComponentWrapper = screen.getByTestId("loginComponentTest");
+  renderWithProviders(<SignInWithEmail />);
+  const loginComponentWrapper = screen.getByTestId("signInComponentTest");
   expect(loginComponentWrapper).toBeInTheDocument();
   expect(loginComponentWrapper).toHaveClass("bg-white");
   expect(loginComponentWrapper).toHaveClass("shadow-md");
 });
 
 test("Login component matches its own snapshot", () => {
-  const tree = renderer.create(<SignupWithEmail />).toJSON();
+  const tree = renderer.create(<SignInWithEmail />).toJSON();
   expect(tree).toMatchSnapshot();
 });

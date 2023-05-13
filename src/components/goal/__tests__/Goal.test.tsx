@@ -1,25 +1,30 @@
-import Goal from "../Goal";
+import Goal from "@components/goal/Goal";
 import { cleanup, screen } from "@testing-library/react";
-import { renderWithProviders } from "../../../utils/testUtils";
+import { GoalType } from "@types";
+import { renderWithProviders } from "@utils/testUtils";
 
 afterEach(() => {
   cleanup();
 });
 
-const goal = {
+const goal: GoalType = {
   id: "ed04edbb-8ced-4cdf-a629-c7a57bd5824e",
-  isComplete: false,
   title: "test goal",
   score: {
     max: 5,
-    actual: 1,
     min: 0,
+    actual: 1,
   },
+  userIdRef: "exampleIdRef",
+  timestamp: Date.now(),
 };
 
-const conpletedGoal = {
+const completedGoal = {
   ...goal,
-  isComplete: true,
+  score: {
+    ...goal.score,
+    actual: 5,
+  },
 };
 
 const currentUser = {
@@ -33,12 +38,11 @@ test("Goal component renders correctly with its class", () => {
   renderWithProviders(<Goal goal={goal} currentUser={currentUser} />);
   const goalComponentWrapper = screen.getByTestId("goalTest");
   expect(goalComponentWrapper).toBeInTheDocument();
-  expect(goalComponentWrapper).toHaveClass("goal");
 });
 
 test("If goal prop has goal.isComplete field value, then Goal component should have goal--completed class", () => {
-  renderWithProviders(<Goal goal={conpletedGoal} currentUser={currentUser} />);
+  renderWithProviders(<Goal goal={completedGoal} currentUser={currentUser} />);
   const goalComponentWrapper = screen.getByTestId("goalTest");
   expect(goalComponentWrapper).toBeInTheDocument();
-  expect(goalComponentWrapper).toHaveClass("goal--isComplete");
+  expect(goalComponentWrapper).toHaveClass("text-yellow-500");
 });

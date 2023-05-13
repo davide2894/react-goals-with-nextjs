@@ -25,7 +25,7 @@ function SignInWithEmail() {
 
   return (
     <div
-      data-testid="loginComponentTest"
+      data-testid="signInComponentTest"
       className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-[380px] h-[380px]">
       <h2 className="text-gray-700 font-bold mb-6">
         Login if you have already an account
