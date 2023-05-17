@@ -7,6 +7,8 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import Layout from "@components/layout/Layout";
 import { initFirebase } from "@firebase";
+import { TourProvider } from "@reactour/tour";
+import { steps, styles } from "@utils/tourConfigs";
 
 initFirebase();
 initAuth();
@@ -14,9 +16,16 @@ initAuth();
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <TourProvider
+        steps={steps}
+        styles={styles}
+        onClickClose={({ setIsOpen }) => {
+          setIsOpen(false);
+        }}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </TourProvider>
     </Provider>
   );
 }

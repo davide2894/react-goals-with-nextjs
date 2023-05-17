@@ -9,7 +9,7 @@ function NewGoalButton() {
   return (
     <div>
       <button
-        className="fixed flex flex-col justify-center right-5 bottom-16 md:bottom-5 w-16 h-16 rounded-full bg-yellow-500 hover:bg-yellow-700"
+        className="newGoalButton fixed flex flex-col justify-center right-5 bottom-16 md:bottom-5 w-16 h-16 rounded-full bg-yellow-500 hover:bg-yellow-700"
         onClick={() => setShowNewGoalForm(true)}>
         <ButtonIcon iconName="add-icon" customCssClasses="ml-auto mr-auto" />
       </button>

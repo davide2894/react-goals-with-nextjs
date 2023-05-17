@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@next/bundle-analyzer": "^13.3.0",
+    "@reactour/tour": "^3.4.0",
     "@reduxjs/toolkit": "^1.9.3",
     "@types/node": "18.15.11",
     "@types/react": "18.0.34",

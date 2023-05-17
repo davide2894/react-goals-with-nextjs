@@ -75,9 +75,6 @@ const registerWithEmailAndPassword = async (
       password
     );
 
-    const details = getAdditionalUserInfo(registrationResult);
-    log("details -> ", details);
-
     const user = registrationResult.user;
     const userDocId = getUserDocId(user.email, user.uid);
     const userDocRef = doc(db, `users/${userDocId}`);
@@ -88,11 +85,6 @@ const registerWithEmailAndPassword = async (
       authProvider: "local",
       refreshToken: user.refreshToken,
     });
-    if (details?.isNewUser) {
-      await createExampleGoal(user);
-    } else {
-      log("Firebase.ts file -> user already registered");
-    }
   } catch (err) {
     alert(
       "There is an issue with the inserted email or password. Please try again"
@@ -132,30 +124,6 @@ const signInWithEmailAndPswd = async (email: string, password: string) => {
   } catch (err) {
     alert("There is an issue with your credentials. Please try again");
   }
-};
-
-const createExampleGoal = async (user: User) => {
-  const exampleGoal = {
-    title:
-      "Firebase.ts file -> this is an example goal. You should start adding yours! :)",
-    score: {
-      max: 5,
-      min: 0,
-      actual: 0,
-    },
-    id: "exampleId",
-    userIdRef: user.uid,
-    timestamp: Date.now(),
-  };
-
-  const exampleDocRef = doc(
-    db,
-    `/users/${getUserDocId(user.email, user.uid)}/user-goals/${exampleGoal.id}`
-  );
-  log("Firebase.ts file -> creating example goal for new user");
-  await setDoc(exampleDocRef, exampleGoal, { merge: true });
-  log("Firebase.ts file -> created example goal for new user");
-  log({ newUserGoal: exampleGoal });
 };
 
 export {

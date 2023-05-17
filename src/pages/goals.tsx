@@ -23,6 +23,8 @@ import { isSubmitting } from "@formSlice";
 import getUserGoalsFromDB from "@utils/getUserGoalsFromDB";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useTour } from "@reactour/tour";
+import { setShowTour } from "@tourSlice";
 
 export function Goals({ goalsFromDB }: any) {
   log("Goals page rendered");
@@ -30,9 +32,11 @@ export function Goals({ goalsFromDB }: any) {
 
   const user = useAuthUser();
   const goals = useAppSelector((state) => state.goalReducer.goals);
+  const tour = useAppSelector((state) => state.tourReducer.showTour);
   const dispatch = useDispatch();
-
   const debouncedGoals = useDebounce(goals, 200, { trailing: true });
+  const { setIsOpen, isOpen } = useTour();
+
   useSyncFirestoreDb(debouncedGoals[0], getUserDocId(user.email, user.id));
 
   useEffect(() => {
@@ -44,6 +48,29 @@ export function Goals({ goalsFromDB }: any) {
   useEffect(() => {
     dispatch(isSubmitting(false));
   }, [dispatch]);
+
+  useEffect(() => {
+    let showTourLocalState = JSON.parse(
+      localStorage.getItem("showTourLocalState") || "true"
+    );
+    if (showTourLocalState) {
+      dispatch(setShowTour(true));
+    } else {
+      dispatch(setShowTour(false));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (tour) {
+      setIsOpen(true);
+    }
+  }, [setIsOpen, tour]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      dispatch(setShowTour(false));
+    }
+  }, [dispatch, isOpen]);
 
   const content = goals.map((goal: GoalType) => {
     return <Goal key={goal.id} goal={goal} />;
