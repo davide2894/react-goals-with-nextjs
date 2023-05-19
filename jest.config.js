@@ -10,16 +10,9 @@ const createJestConfig = nextJest({
 // Add any custom config to be passed to Jest
 const customJestConfig = {
   roots: ["<rootDir>"],
-  modulePaths: [compilerOptions.baseUrl], // <-- This will be set to 'baseUrl' value
+  modulePaths: [compilerOptions.baseUrl],
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   testEnvironment: "jest-environment-jsdom",
-  // moduleNameMapper: {
-  //   // Handle module aliases (this will be automatically configured for you soon)
-  //   "^@/components/(.*)$": "<rootDir>/src/components/$1",
-  //   "^@/pages/(.*)$": "<rootDir>/src/pages/$1",
-  //   "^@firebase$": "<rootDir>/src/firebase",
-  //   "^@redux/slices/$": "<rootDir>/src/redux/slices/$1",
-  // },
   moduleNameMapper: pathsToModuleNameMapper(
     compilerOptions.paths /*, { prefix: '<rootDir>/' } */
   ),
