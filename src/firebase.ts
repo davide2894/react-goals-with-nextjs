@@ -7,7 +7,6 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   getAdditionalUserInfo,
-  User,
 } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 import getUserDocId from "@utils/getUserDocId";
