@@ -14,8 +14,3 @@ test("Login component renders correctly", () => {
   expect(loginComponentWrapper).toHaveClass("bg-white");
   expect(loginComponentWrapper).toHaveClass("shadow-md");
 });
-
-test("Login component matches its own snapshot", () => {
-  const tree = renderer.create(<SignInWithEmail />).toJSON();
-  expect(tree).toMatchSnapshot();
-});

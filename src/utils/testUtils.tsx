@@ -5,6 +5,7 @@ import { Store, configureStore } from "@reduxjs/toolkit";
 import goalReducer from "@goalSlice";
 import goalFormReducer from "@goalFormSlice";
 import formReducer from "@formSlice";
+import tourReducer from "@tourSlice";
 import type { PreloadedState } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { RootState } from "@store";
@@ -46,15 +47,16 @@ export function renderWithProviders(
         isSubmitting: false,
       },
       tourReducer: {
-        showTour: true,
+        showTour: false,
       },
     },
     // Automatically create a store instance if no store was passed in
     store = configureStore({
       reducer: {
-        goalReducer: goalReducer,
         goalFormReducer: goalFormReducer,
+        goalReducer: goalReducer,
         formReducer: formReducer,
+        tourReducer: tourReducer,
       },
       preloadedState,
     }),
