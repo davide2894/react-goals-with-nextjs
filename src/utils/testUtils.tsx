@@ -45,6 +45,9 @@ export function renderWithProviders(
       formReducer: {
         isSubmitting: false,
       },
+      tourReducer: {
+        showTour: true,
+      },
     },
     // Automatically create a store instance if no store was passed in
     store = configureStore({
