@@ -19,7 +19,12 @@ export const steps = [
   },
   {
     selector: ".editButton",
-    content: "This is the button you need for editing your goal",
+    content:
+      "This is the button you need for editing your goal. Click on it to edit",
+  },
+  {
+    selector: ".goal-text",
+    content: "Or modify the goal title by directly typing on it",
   },
   {
     selector: ".deleteButton",

@@ -20,7 +20,7 @@ function Goal({ goal }: any) {
   const goalCsslasses = `goal mb-6 ml-6 mr-6 ${
     isComplete ? "text-yellow-500" : "text-white"
   }`;
-  const testTitleCssClasses = `text-lg ${
+  const testTitleCssClasses = `text-lg goal-text ${
     isComplete ? "after:content-['✓'] after:ml-2" : ""
   }`;
   function onEditFormOpenHandler() {
