@@ -30,7 +30,7 @@ export const goalSlice = createSlice({
     updateGoalTitle: (state, action) => {
       const goalToUpdate = getGoalToUpdate(state, action);
       if (goalToUpdate) {
-        goalToUpdate.title = action.payload.newTitle;
+        goalToUpdate.title = action.payload.editableTitleValue;
       }
     },
     incrementScore: (state, action) => {

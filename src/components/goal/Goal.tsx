@@ -35,9 +35,9 @@ function Goal({ goal }: any) {
   }
 
   useEffect(() => {
-    dispatch(updateGoalTitle({ goal, editableTitleValue }));
+    dispatch(updateGoalTitle({ id: goal.id, editableTitleValue }));
     return () => {};
-  }, [editableTitleValue, dispatch, goal]);
+  }, [editableTitleValue, dispatch, goal.id]);
 
   return (
     <div data-testid="goalTest" className={goalCsslasses}>
@@ -46,7 +46,7 @@ function Goal({ goal }: any) {
         suppressContentEditableWarning={true}
         onBlur={handleTitleChange}
         className={testTitleCssClasses}>
-        {editableTitleValue}
+        {goal.title}
       </p>
       <div className="flex mt-2 items-end">
         <div className="score text-2xl">
